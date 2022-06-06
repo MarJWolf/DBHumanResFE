@@ -1,0 +1,25 @@
+.footer{
+  background-color: #244157;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .footer{
+    background-color: #244157;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+  }
+}
+
+.container{
+  flex : 1;
+  display: inline-block;
+  width: 50%;
+  margin: 20px 100px;
+  align-self: center;
+}

@@ -1,0 +1,21 @@
+<header>
+  <ng-template [ngIf]="isLogged()">
+    <div class="header">
+      <div class="align-left">
+      <button mat-raised-button color="accent">Log out</button>
+      <button mat-raised-button color="accent">Home</button>
+      <button mat-raised-button color="accent">Calendar</button>
+      <ng-template [ngIf]="isHR()">
+        <button mat-raised-button color="accent">Edit</button>
+      </ng-template>
+    </div>
+    <div class="align-right">
+        <button mat-button [matMenuTriggerFor]="menu" class="align-right">Menu</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>User data</button>
+          <button mat-menu-item>Log out</button>
+        </mat-menu>
+    </div>
+    </div>
+  </ng-template>
+</header>

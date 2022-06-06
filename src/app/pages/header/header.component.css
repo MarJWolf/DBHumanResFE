@@ -1,0 +1,11 @@
+.header{
+  background-color: #244157;
+  display: flex;
+}
+
+.header button{
+  margin: 20px 5px;
+}
+.header div{
+  flex : 1;
+}

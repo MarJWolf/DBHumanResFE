@@ -10,3 +10,9 @@ export interface User {
   manager_id: number,
   //"allWorkleaves": []
 }
+
+export interface UserS{
+  userID: number,
+  userRole: string[]
+}
+

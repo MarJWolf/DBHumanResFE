@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
+$background-color: #022b3d;
+$accent-color: #77bbc4;
+
+/*  Main: #022b3d,
+Light:#244157,
+Dark: #223,*/
+
+$primary: (
+  Main: #ddd,
+  Light:#fff,
+  Dark: #555,
+  contrast:(
+  Main: #fff,
+  Light: #fff,
+  Dark: #fff
+  )
+);
+$cyan: (
+  Main: #77bbc4,
+  Light:#b1f6f4,
+  Dark: #447a96,
+  contrast:(
+    Main: #fff,
+    Light: #fff,
+    Dark: #fff
+  )
+);
+
+$primary: mat.define-palette($primary,Main,Light,Dark);
+$accent: mat.define-palette($cyan,Main,Light,Dark);
+$custom-theme: mat.define-dark-theme($primary,$accent,mat.$red-palette);
+
+@include mat.all-component-themes($custom-theme);
+
+.base-theme{
+  background-color: $background-color;
+}
+
+.accent-theme{
+  -webkit-text-fill-color: $accent-color;
+}
+
+.text-white{
+  color: white;
+}
+
+.max-width{
+  width: 100%;
+}
+.w20{
+  width: 20%;
+}
+.align-center{
+  text-align: center;
+}
+.align-left{
+  text-align: left;
+}
+
+.align-right{
+  text-align: right;
+}
+
+body{
+  margin: 0;
+  background-color: #022b3d;
+}
