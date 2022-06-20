@@ -2,18 +2,19 @@
   <ng-template [ngIf]="isLogged()">
     <div class="header">
       <div class="align-left">
-      <button mat-raised-button color="accent">Log out</button>
-      <button mat-raised-button color="accent">Home</button>
-      <button mat-raised-button color="accent">Calendar</button>
-      <ng-template [ngIf]="isHR()">
-        <button mat-raised-button color="accent">Edit</button>
+      <button mat-raised-button color="accent">Начална страница</button>
+      <button mat-raised-button color="accent">Календар</button>
+      <ng-template [ngIf]="isAdmin()">
+        <button mat-raised-button color="accent">Всички потребители</button>
       </ng-template>
     </div>
     <div class="align-right">
-        <button mat-button [matMenuTriggerFor]="menu" class="align-right">Menu</button>
+        <button mat-button [matMenuTriggerFor]="menu" class="align-right menu">Меню
+          <img  src="./assets/img/Sample_User_Icon.png" alt="user img" class="img">
+        </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>User data</button>
-          <button mat-menu-item>Log out</button>
+          <button mat-menu-item>Моята информация</button>
+          <button mat-menu-item (click)="onLogOut()">Изход</button>
         </mat-menu>
     </div>
     </div>

@@ -1,3 +1,5 @@
+import {Workleave} from "./workleave";
+
 export interface User {
   id: number,
   email: string,
@@ -6,13 +8,12 @@ export interface User {
   jobTitle: string,
   workplace: string,
   paidDays: number,
-  //"role": "User",
+  role: string,
   manager_id: number,
-  //"allWorkleaves": []
+  allWorkleaves: Workleave[]
 }
 
 export interface UserS{
   userID: number,
   userRole: string[]
 }
-

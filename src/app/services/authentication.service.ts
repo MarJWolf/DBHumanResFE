@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {UserS} from "../interfaces/user";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import {UserS} from "../interfaces/user";
 export class AuthenticationService {
   private _LoggedUser?: UserS;
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   public getLoggedUser(): UserS | undefined{
@@ -27,4 +28,9 @@ export class AuthenticationService {
     this._LoggedUser = value;
   }
 
+  logOut() {
+    this._LoggedUser = undefined;
+    sessionStorage.removeItem("LoggedUser");
+    this.http.get("http://localhost:8080/logout").subscribe();
+  }
 }

@@ -1,9 +1,9 @@
 <form class="max-width align-center align-top" (ngSubmit)="onSubmit()">
-  <h1 class="accent-theme max-width">Login</h1>
+  <h1 class="accent-theme max-width">Вход</h1>
 
   <div class="max-width">
     <mat-form-field appearance="fill" class="w20 text-white">
-      <mat-label>Enter your email</mat-label>
+      <mat-label>Имейл</mat-label>
       <input matInput placeholder="pat@example.com" [formControl]="email" required>
       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
@@ -11,13 +11,13 @@
 
   <div class="max-width">
     <mat-form-field appearance="fill" class="w20 text-white">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="pass" required>
-      <mat-error *ngIf="pass.invalid">Password is invalid!</mat-error>
+      <mat-label>Парола</mat-label>
+      <input matInput type="password" [formControl]="pass" required>
+      <mat-error *ngIf="pass.invalid">Паролата е прекалено кратка!</mat-error>
     </mat-form-field>
   </div>
 
   <mat-error> {{error}} </mat-error>
 
-  <button class="flex" mat-stroked-button color="accent">Login</button>
+  <button class="flex" mat-stroked-button color="accent">Вход</button>
 </form>

@@ -1,1 +1,24 @@
-<p>home works!</p>
+<div *ngIf="user" class="container align-center">
+  <h2>Име : {{user.fullName}}</h2>
+  <h2>Длъжност : {{user.jobTitle}}</h2>
+  <h2>Оставащи платени дни : {{user.paidDays}}</h2>
+</div>
+<div class="max-width">
+  <div class="container-column" *ngIf="isManager()">
+    <h2 *ngIf=" subUsersWL.length > 0">Потребители които вие менажирате</h2>
+    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true"></app-wltable>
+  </div>
+  <div class="container-column" *ngIf="isAdmin()">
+    <h2 *ngIf="adminWL.length > 0">Потребители които нямат мениджър</h2>
+    <app-wltable class="tables" [workleaves]="adminWL" [hasUsername]="true"></app-wltable>
+    <h2 *ngIf="subUsersWL.length > 0">Потребители които не са одобрени от Администратор</h2>
+    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true"></app-wltable>
+  </div>
+  <div class="align-center button">
+    <button mat-raised-button color="accent" (click)="openDialog()">Създай своя отпуск</button>
+  </div>
+  <div class="container-column" >
+    <h2 *ngIf="workleaves.length > 0">Вашите отпуски</h2>
+    <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="false"></app-wltable>
+  </div>
+</div>

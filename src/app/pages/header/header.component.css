@@ -9,3 +9,14 @@
 .header div{
   flex : 1;
 }
+.menu{
+  background-color: #b1f6f4;
+  border-radius: 50px;
+  margin: 20px 5px;
+  align-content: end;
+}
+
+.img {
+  height: 20px;
+  width: 20px;
+}

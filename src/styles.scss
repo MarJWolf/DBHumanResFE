@@ -68,4 +68,11 @@ $custom-theme: mat.define-dark-theme($primary,$accent,mat.$red-palette);
 body{
   margin: 0;
   background-color: #022b3d;
+  min-height: 100vh;
+}
+
+.app-stat{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
