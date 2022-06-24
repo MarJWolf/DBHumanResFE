@@ -10,7 +10,7 @@ import {UserService} from "../../services/user.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService:AuthenticationService, private router:Router, private userService:UserService) { }
+  constructor(private authService:AuthenticationService, public router:Router, private userService:UserService) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
 
   onLogOut(){
     this.authService.logOut();
-    this.router.navigate(["login"])
+    this.router.navigate(["login"]);
   }
+
 }

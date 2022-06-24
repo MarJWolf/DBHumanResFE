@@ -2,10 +2,15 @@
   <ng-template [ngIf]="isLogged()">
     <div class="header">
       <div class="align-left">
-      <button mat-raised-button color="accent">Начална страница</button>
+      <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
       <button mat-raised-button color="accent">Календар</button>
+        <ng-template [ngIf]="isManager()">
+<!--          //todo : stranica specialno za otpuskite na horata na koito e menidjur-->
+        </ng-template>
       <ng-template [ngIf]="isAdmin()">
-        <button mat-raised-button color="accent">Всички потребители</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['users'])">Всички потребители</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['inactive-users'])">Всички неактивни потребители</button>
       </ng-template>
     </div>
     <div class="align-right">

@@ -1,0 +1,48 @@
+<form>
+  <h1 mat-dialog-title *ngIf="data">Hi {{data.user.fullName}}</h1>
+  <div mat-dialog-content>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="emailFC" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="emailFC.hasError('email') && !emailFC.hasError('required')">
+        Невалиден имейл
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Парола</mat-label>
+      <input type="text" matInput [formControl]="passFC" placeholder="Pass249910word">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Длъжност</mat-label>
+      <input type="text" matInput [formControl]="jobFC" placeholder="Junior frontend developer">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Месторабота</mat-label>
+      <input type="text" matInput [formControl]="placeFC" placeholder="Varna">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Оставащи дни платен отпуск</mat-label>
+      <input type="text" matInput [formControl]="daysFC" placeholder="20">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Роля</mat-label>
+      <mat-select [formControl]="roleFC">
+        <mat-option *ngFor="let role of roleKeys" [value]="role[0]">{{role[1]}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions>
+
+  </div>
+</form>

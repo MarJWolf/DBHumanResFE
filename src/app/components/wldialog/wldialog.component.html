@@ -1,51 +1,54 @@
-<form (ngSubmit)="onOkClick()" >
-<h1 mat-dialog-title *ngIf="data">{{data.workleave.userName}}</h1>
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Тип на отпуск</mat-label>
-    <mat-select [formControl]="typeFC">
-      <mat-option *ngFor="let type of typeKeys" [value]="type[0]">{{type[1]}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <p>Дата на създаване</p>
+<form (ngSubmit)="onOkClick()">
+  <h1 mat-dialog-title *ngIf="data">{{data.workleave.userName}}</h1>
+  <div mat-dialog-content>
     <mat-form-field appearance="fill">
-    <mat-label>Изберете дата</mat-label>
-    <input matInput [formControl]="fillDateFC" [matDatepicker]="fillpicker" [matDatepickerFilter]="myFilter">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="fillpicker"></mat-datepicker-toggle>
-    <mat-datepicker disabled="false" #fillpicker></mat-datepicker>
-  </mat-form-field>
-  <p>Начална дата</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Изберете дата</mat-label>
-    <input matInput  [formControl]="startDateFC" [matDatepicker]="startpicker" [matDatepickerFilter]="myFilter">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
-    <mat-datepicker disabled="false" #startpicker></mat-datepicker>
-  </mat-form-field>
-  <p>Крайна дата</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Изберете дата</mat-label>
-    <input matInput  [formControl]="endDateFC" [matDatepicker]="endpicker" [matDatepickerFilter]="myFilter">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
-    <mat-datepicker disabled="false" #endpicker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field *ngIf="isManager() || isAdmin()" appearance="fill">
-    <mat-label>Статус - Мениджър</mat-label>
-    <mat-select [formControl]="statusManagerFC">
-      <mat-option *ngFor="let stat of statusKeys" [value]="stat[0]">{{stat[1]}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="isAdmin()" appearance="fill">
-    <mat-label>Статус - Админ</mat-label>
-    <mat-select [formControl]="statusAdminFC">
-      <mat-option *ngFor="let stat of statusKeys" [value]="stat[0]">{{stat[1]}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Назад</button>
-  <button mat-button type="submit">Запази промени</button>
-</div>
+      <mat-label>Тип на отпуск</mat-label>
+      <mat-select [formControl]="typeFC">
+        <mat-option *ngFor="let type of typeKeys" [value]="type[0]">{{type[1]}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>Дата на създаване</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Изберете дата</mat-label>
+      <input matInput [formControl]="fillDateFC" [matDatepicker]="fillpicker" [matDatepickerFilter]="myFilter">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="fillpicker"></mat-datepicker-toggle>
+      <mat-datepicker disabled="false" #fillpicker></mat-datepicker>
+    </mat-form-field>
+    <p>Начална дата</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Изберете дата</mat-label>
+      <input matInput [formControl]="startDateFC" [matDatepicker]="startpicker" [matDatepickerFilter]="myFilter">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+      <mat-datepicker disabled="false" #startpicker></mat-datepicker>
+    </mat-form-field>
+    <p>Крайна дата</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Изберете дата</mat-label>
+      <input matInput [formControl]="endDateFC" [matDatepicker]="endpicker" [matDatepickerFilter]="myFilter">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+      <mat-datepicker disabled="false" #endpicker></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="data">
+      <mat-form-field *ngIf="isManager() || isAdmin()" appearance="fill">
+        <mat-label>Статус - Мениджър</mat-label>
+        <mat-select [formControl]="statusManagerFC">
+          <mat-option *ngFor="let stat of statusKeys" [value]="stat[0]">{{stat[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="isAdmin()" appearance="fill">
+        <mat-label>Статус - Админ</mat-label>
+        <mat-select [formControl]="statusAdminFC">
+          <mat-option *ngFor="let stat of statusKeys" [value]="stat[0]">{{stat[1]}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Назад</button>
+    <button mat-button type="submit">Запази промени</button>
+  </div>
 </form>
+

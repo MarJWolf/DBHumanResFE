@@ -10,38 +10,40 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./wltable.component.css']
 })
 export class WLtableComponent implements OnInit {
-@Input()
+  @Input()
   workleaves?: Workleave[]
-  displayedColumns: string[] = [ 'startDate', 'endDate', 'fillDate', 'statusManager', 'statusAdmin', 'actions']
+  displayedColumns: string[] = ['startDate', 'endDate', 'fillDate', 'statusManager', 'statusAdmin', 'actions']
   @Input()
   hasUsername?: boolean
-  constructor( private userService:UserService, public dialog: MatDialog) {}
 
-  isAdmin(){
+  constructor(private userService: UserService, public dialog: MatDialog) {
+  }
+
+  isAdmin() {
     return this.userService.isAdmin()
   }
 
-  isManager(){
+  isManager() {
     return this.userService.isManager()
   }
 
-  accept(workleaveId : number){
-    this.userService.changeStatus(workleaveId,  "Confirmed").subscribe()
+  accept(workleaveId: number) {
+    this.userService.changeStatus(workleaveId, "Confirmed").subscribe()
   }
 
-  deny(workleaveId : number){
-    this.userService.changeStatus(workleaveId,  "Denied").subscribe()
+  deny(workleaveId: number) {
+    this.userService.changeStatus(workleaveId, "Denied").subscribe()
   }
 
   openDialog(workleave: Workleave): void {
-  this.dialog.open(WldialogComponent, {
+    this.dialog.open(WldialogComponent, {
       width: 'clamp(300px,50%,500px)',
-      data: {workleave:workleave},
+      data: {workleave: workleave},
     });
   }
 
   ngOnInit(): void {
-  this.displayedColumns = this.hasUsername?['userName', ...this.displayedColumns] : this.displayedColumns;
+    this.displayedColumns = this.hasUsername ? ['userName', ...this.displayedColumns] : this.displayedColumns;
   }
 
 }

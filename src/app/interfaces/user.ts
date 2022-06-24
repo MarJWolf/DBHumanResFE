@@ -13,7 +13,16 @@ export interface User {
   allWorkleaves: Workleave[]
 }
 
-export interface UserS{
+export interface UserSimp {
+  id: number,
+  email: string,
+  name: string,
+  role: string
+}
+
+export interface UserS {
   userID: number,
   userRole: string[]
 }
+
+export type Role = "Admin" | "User" | "Manager";

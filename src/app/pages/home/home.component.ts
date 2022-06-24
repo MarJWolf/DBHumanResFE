@@ -29,13 +29,11 @@ export class HomeComponent implements OnInit {
     if (userInfo) {
       userInfo.subscribe(value => {
           this.user = value;
-          this.workleaves = this.user?.allWorkleaves;
-          console.log(this.workleaves);
+          this.workleaves = this.user?.allWorkleaves?? [];
           if (this.isManager() && this.user) {
             this.userService.getSubWorkleavesByMStat(this.user.id, "Pending")?.subscribe(value => this.subUsersWL = value
             );
           }
-
           if (this.isAdmin() && this.user) {
             this.userService.getAllWorkleavesByAdminStat("Pending")?.subscribe(value => this.subUsersWL = value);
             this.userService.getAllWorkleavesNoManager().subscribe(value => this.adminWL = value);
@@ -43,8 +41,6 @@ export class HomeComponent implements OnInit {
           }
         }
       );
-
-
     }
 
   }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
-import {User} from "../interfaces/user";
+import {User, UserSimp} from "../interfaces/user";
 import {Workleave} from "../interfaces/workleave";
 
 @Injectable({
@@ -20,6 +20,14 @@ export class UserService {
       });
     }
     return null;
+  }
+
+  getAllUsers() {
+    return this.http.get<UserSimp[]>("http://localhost:8080/users/allSimplified");
+  }
+
+  getAllInactiveUsers() {
+    return this.http.get<UserSimp[]>("http://localhost:8080/users/allInactiveSimplified");
   }
 
   getSubWorkleavesByMStat(userId: number, status: string) {
@@ -46,11 +54,15 @@ export class UserService {
   }
 
   createWorkleave(workleave: any){
-    return this.http.post("http://localhost:8080/workleaves/create", {workleave});
+    return this.http.post("http://localhost:8080/workleaves/create", workleave);
   }
 
   getAllWorkleavesNoManager() {
     return this.http.get<Workleave[]>("http://localhost:8080/workleaves/pendingWithoutManager");
+  }
+
+  getAllWorkleaves() {
+    return this.http.get<Workleave[]>("http://localhost:8080/workleaves/allSimplified");
   }
 
   isAdmin() {

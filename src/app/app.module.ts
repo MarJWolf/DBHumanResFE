@@ -24,10 +24,17 @@ import { WldialogComponent } from './components/wldialog/wldialog.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import { AllWorkleavesComponent } from './pages/all-workleaves/all-workleaves.component';
+import { AllUsersComponent } from './pages/all-users/all-users.component';
+import { AllInactiveUsersComponent } from './pages/all-inactive-users/all-inactive-users.component';
+import { UdialogComponent } from './components/udialog/udialog.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
+  { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard]},
+  { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
 @NgModule({
@@ -38,7 +45,11 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     WLtableComponent,
-    WldialogComponent
+    WldialogComponent,
+    AllWorkleavesComponent,
+    AllUsersComponent,
+    AllInactiveUsersComponent,
+    UdialogComponent
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,7 @@ export class WldialogComponent implements OnInit {
   constructor(private userService:UserService,
     private authService: AuthenticationService,
     public dialogRef: MatDialogRef<WLtableComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave },
+    @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave }
   ) {
     if(data){
       this.fillDateFC.setValue(data.workleave.fillDate);
@@ -66,9 +66,9 @@ export class WldialogComponent implements OnInit {
         const finalWorkleave = {
           ...this.data.workleave,
           type: this.workleaveForm.value.type,
-          fillDate: fillDate.toLocaleDateString(),
-          startDate: startDate.toLocaleDateString(),
-          endDate: endDate.toLocaleDateString(),
+          fillDate,
+          startDate,
+          endDate,
           statusManager: this.workleaveForm.value.statusManager,
           statusAdmin: this.workleaveForm.value.statusAdmin
         };
@@ -77,15 +77,16 @@ export class WldialogComponent implements OnInit {
         const finalWorkleave = {
           userId: this.authService.getLoggedUser()?.userID,
           type: this.workleaveForm.value.type,
-          fillDate: fillDate.toLocaleDateString(),
-          startDate: startDate.toLocaleDateString(),
-          endDate: endDate.toLocaleDateString(),
-          statusManager: Status.Pending,
-          statusAdmin: Status.Pending
+          fillDate,
+          startDate,
+          endDate,
+          statusManager: "Pending",
+          statusAdmin: "Pending"
         };
         this.userService.createWorkleave(finalWorkleave).subscribe();
       }
     }
+    this.dialogRef.close();
   }
 
   ngOnInit(): void {
