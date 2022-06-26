@@ -27,7 +27,8 @@
     <th mat-header-cell *matHeaderCellDef> Действия </th>
     <td mat-cell *matCellDef="let workleave">
       <div *ngIf="toEdit">
-        <button mat-raised-button color="accent" (click)="openDialog(workleave)">Промяна</button>
+        <button [disabled]="(workleave.statusAdmin != 'Pending' || workleave.statusManager != 'Pending') && isUser()" mat-raised-button color="accent" (click)="openDialog(workleave)">Промяна</button>
+        <button *ngIf="canCancel(workleave)" mat-raised-button color="accent" (click)="cancel(workleave.id)">Отмени</button>
       </div>
       <div *ngIf="!toEdit && (isManager() || isAdmin())">
         <button mat-raised-button color="accent" (click)="accept(workleave.id)">Одобри</button>

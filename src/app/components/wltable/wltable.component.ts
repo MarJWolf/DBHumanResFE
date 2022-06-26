@@ -3,6 +3,7 @@ import {Workleave} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
 import {WldialogComponent} from "../wldialog/wldialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-wltable',
@@ -18,7 +19,7 @@ export class WLtableComponent implements OnInit {
   @Input()
   toEdit?: boolean
 
-  constructor(private backendService: BackendService, public dialog: MatDialog) {
+  constructor(private backendService: BackendService, public dialog: MatDialog, private authService: AuthenticationService) {
   }
 
   isAdmin() {
@@ -29,12 +30,20 @@ export class WLtableComponent implements OnInit {
     return this.backendService.isManager()
   }
 
+  isUser(){
+    return this.backendService.isUser()
+  }
+
   accept(workleaveId: number) {
     this.backendService.changeStatus(workleaveId, "Confirmed").subscribe()
   }
 
   deny(workleaveId: number) {
     this.backendService.changeStatus(workleaveId, "Denied").subscribe()
+  }
+
+  cancel(workleaveId: number) {
+    this.backendService.cancelWorkleave(workleaveId, "Cancelled").subscribe()
   }
 
   openDialog(workleave: Workleave): void {
@@ -48,4 +57,7 @@ export class WLtableComponent implements OnInit {
     this.displayedColumns = this.hasUsername ? ['userName', ...this.displayedColumns] : this.displayedColumns;
   }
 
+  canCancel(workleave: Workleave): boolean{
+    return ((workleave.statusAdmin.toString() == "Pending" || workleave.statusManager.toString() == "Pending") && workleave.userId == this.authService.getLoggedUser()?.userID);
+  }
 }

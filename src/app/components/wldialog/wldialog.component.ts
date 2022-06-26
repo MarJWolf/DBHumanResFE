@@ -5,6 +5,8 @@ import {Status, Type, Workleave} from "../../interfaces/workleave";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BackendService} from "../../services/backend.service";
 import {AuthenticationService} from "../../services/authentication.service";
+import {DateAdapter} from "@angular/material/core";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-wldialog',
@@ -23,7 +25,6 @@ export class WldialogComponent implements OnInit {
   statusAdminFC = new FormControl("Pending")
 
   workleaveForm = new FormGroup({
-    fillDate: this.fillDateFC,
     startDate: this.startDateFC,
     endDate: this.endDateFC,
     type: this.typeFC,
@@ -31,24 +32,33 @@ export class WldialogComponent implements OnInit {
     statusAdmin: this.statusAdminFC
   })
 
-  constructor(private backendService:BackendService,
-    private authService: AuthenticationService,
-    public dialogRef: MatDialogRef<WLtableComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave }
+  constructor(private backendService: BackendService,
+              private authService: AuthenticationService,
+              public dialogRef: MatDialogRef<WLtableComponent>,
+              private _adapter: DateAdapter<any>,
+              @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave },
   ) {
-    if(data){
-      this.fillDateFC.setValue(data.workleave.fillDate);
-      this.startDateFC.setValue(data.workleave.startDate);
-      this.endDateFC.setValue(data.workleave.endDate);
+    this._adapter.setLocale("bg-BG")
+    if (data) {
+      this.fillDateFC.setValue(new Date(data.workleave.fillDate));
+      this.startDateFC.setValue(new Date(data.workleave.startDate));
+      this.endDateFC.setValue(new Date(data.workleave.endDate));
       this.typeFC.setValue(data.workleave.type);
       this.statusManagerFC.setValue(data.workleave.statusManager);
       this.statusAdminFC.setValue(data.workleave.statusAdmin);
     }
   }
 
-  myFilter = (d: any): boolean => {
-    const day = (d || new Date()).getDay();
-    return day !== 0 && day !== 6;
+  myStartFilter = (d: any): boolean => {
+    const day = (d || new Date());
+    const dayOfWeek = (d || new Date()).getDay()
+    return dayOfWeek !== 0 && dayOfWeek !== 6 && day > new Date();
+  };
+
+  myEndFilter = (d: any): boolean => {
+    const day = (d || new Date());
+    const dayOfWeek = (d || new Date()).getDay()
+    return dayOfWeek !== 0 && dayOfWeek !== 6 && day > this.startDateFC.value;
   };
 
   onNoClick(): void {
@@ -56,36 +66,51 @@ export class WldialogComponent implements OnInit {
   }
 
   onOkClick(): void {
-    if(this.workleaveForm.valid) {
-      const fillDate: Date = this.fillDateFC.value;
+    if (this.workleaveForm.valid) {
       const startDate: Date = this.startDateFC.value;
       const endDate: Date = this.endDateFC.value;
+      startDate.setHours(12)
+      endDate.setHours(12)
+      const type = this.workleaveForm.value.type;
       if (this.data) {
+        const fillDate: Date = this.fillDateFC.value;
         const finalWorkleave = {
           ...this.data.workleave,
-          type: this.workleaveForm.value.type,
+          type,
           fillDate,
           startDate,
           endDate,
           statusManager: this.workleaveForm.value.statusManager,
           statusAdmin: this.workleaveForm.value.statusAdmin
         };
-        this.backendService.updateWorkleave(finalWorkleave).subscribe();
+        this.backendService.updateWorkleave(finalWorkleave).subscribe(
+          () => {
+            this.dialogRef.close();
+          }
+        );
       } else {
+        const fillDate = new Date();
         const finalWorkleave = {
           userId: this.authService.getLoggedUser()?.userID,
-          type: this.workleaveForm.value.type,
+          type,
           fillDate,
           startDate,
           endDate,
           statusManager: "Pending",
           statusAdmin: "Pending"
         };
-        this.backendService.createWorkleave(finalWorkleave).subscribe();
+        this.backendService.createWorkleave(finalWorkleave).subscribe({
+            next: () => {
+              this.dialogRef.close();
+            },
+            error: (err:HttpErrorResponse) => {
+              alert(JSON.stringify(err.error));
+            }
+          }
+        );
       }
-      this.dialogRef.close();
-    }
-    else {
+
+    } else {
       this.workleaveForm.markAllAsTouched()
     }
   }
@@ -93,11 +118,15 @@ export class WldialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  isAdmin(){
+  isMine(userID: number){
+    return this.authService.getLoggedUser()?.userID == userID
+  }
+
+  isAdmin() {
     return this.backendService.isAdmin()
   }
 
-  isManager(){
+  isManager() {
     return this.backendService.isManager()
   }
 }

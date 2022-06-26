@@ -28,6 +28,7 @@ import { AllWorkleavesComponent } from './pages/all-workleaves/all-workleaves.co
 import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { AllInactiveUsersComponent } from './pages/all-inactive-users/all-inactive-users.component';
 import { UdialogComponent } from './components/udialog/udialog.component';
+import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -49,7 +50,8 @@ const routes: Routes = [
     AllWorkleavesComponent,
     AllUsersComponent,
     AllInactiveUsersComponent,
-    UdialogComponent
+    UdialogComponent,
+    SimpleDialogComponent
   ],
   imports: [
     BrowserModule,

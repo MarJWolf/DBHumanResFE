@@ -76,3 +76,18 @@ body{
   flex-direction: column;
   min-height: 100vh;
 }
+
+.container-column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.h2{
+  flex: 1;
+  color: white;
+  text-align: center;
+  font-family: SansSerif, serif;
+}

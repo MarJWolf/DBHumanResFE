@@ -1,24 +1,35 @@
-<div *ngIf="user" class="container align-center">
-  <h2>Име : {{user.fullName}}</h2>
-  <h2>Длъжност : {{user.jobTitle}}</h2>
-  <h2>Оставащи платени дни : {{user.paidDays}}</h2>
-</div>
-<div class="max-width">
-  <div class="container-column" *ngIf="isManager()">
+<div class="home">
+  <div class="responsive-container top">
+    <div *ngIf="user" class="container ">
+      <h2 class="title">Вашата информация:</h2>
+      <div class="grid-info">
+        <h3>Име :</h3><h3 class="right"> {{user.fullName}}</h3>
+        <h3>Длъжност :</h3><h3 class="right"> {{user.jobTitle}}</h3>
+        <h3>Оставащи платени дни :</h3><h3 class="right"> {{user.paidDays}}</h3>
+      </div>
+
+    </div>
+    <div class="min-width ">
+      <div class="container-column" >
+        <div class="menu ">
+          <h2 *ngIf="workleaves.length > 0">Вашите отпуски</h2>
+          <button mat-raised-button color="accent" (click)="openDialog()">Създай своя отпуск</button>
+        </div>
+
+        <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="false" [toEdit]="true"></app-wltable>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-column bottom" *ngIf="isManager()">
     <h2 *ngIf=" subUsersWL.length > 0">Потребители които вие менажирате</h2>
     <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
   </div>
-  <div class="container-column" *ngIf="isAdmin()">
+  <div class="container-column bottom" *ngIf="isAdmin()">
     <h2 *ngIf="adminWL.length > 0">Потребители които нямат мениджър</h2>
     <app-wltable class="tables" [workleaves]="adminWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
     <h2 *ngIf="subUsersWL.length > 0">Потребители които не са одобрени от Администратор</h2>
     <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
   </div>
-  <div class="align-center button">
-    <button mat-raised-button color="accent" (click)="openDialog()">Създай своя отпуск</button>
-  </div>
-  <div class="container-column" >
-    <h2 *ngIf="workleaves.length > 0">Вашите отпуски</h2>
-    <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="false" [toEdit]="true"></app-wltable>
-  </div>
 </div>
+

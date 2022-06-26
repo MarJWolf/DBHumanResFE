@@ -1,7 +1,9 @@
 <div class="align-center button">
   <button mat-raised-button color="accent" (click)="openDialogNew()">Създай потребител</button>
 </div>
-<div>
+<h2 class="h2" *ngIf="users && users.length > 0">Всички потребители</h2>
+<div class="container-column">
+
     <table mat-table *ngIf="users && users.length > 0" [dataSource]="users" class="mat-elevation-z8">
 
     <ng-container matColumnDef="email" >
@@ -23,6 +25,7 @@
       <th mat-header-cell *matHeaderCellDef> Действие</th>
       <td mat-cell *matCellDef="let user">
         <button mat-raised-button color="accent" (click)="openDialog(user.id)">Промени</button>
+        <button mat-raised-button color="accent" (click)="dismissUser(user.id)">Уволни</button>
       </td>
     </ng-container>
 

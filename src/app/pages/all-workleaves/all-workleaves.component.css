@@ -1,19 +1,6 @@
-.container-column{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-h2{
-  flex: 1;
-  color: white;
-  text-align: center;
-  font-family: SansSerif, serif;
-}
-
 .tables{
   display: flex;
+  width: 100%
 }
 
 .button{

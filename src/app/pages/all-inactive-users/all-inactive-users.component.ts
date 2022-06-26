@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User, UserSimp} from "../../interfaces/user";
 import {BackendService} from "../../services/backend.service";
 import {MatDialog} from "@angular/material/dialog";
+import {UdialogComponent} from "../../components/udialog/udialog.component";
 
 @Component({
   selector: 'app-all-inactive-users',
@@ -33,4 +34,12 @@ export class AllInactiveUsersComponent implements OnInit {
     }
   }
 
+  openDialog(Id: number): void {
+    this.backendService.getById(Id).subscribe(value => {
+      this.dialog.open(UdialogComponent, {
+        width: 'clamp(300px,50%,500px)',
+        data: {user : value}
+      });
+    });
+  }
 }

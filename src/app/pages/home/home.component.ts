@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   adminWL: Workleave[] =[]
   workleaves: Workleave[] =[]
 
-  constructor(private http: HttpClient, private router: Router, private backendService: BackendService, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public router: Router, private backendService: BackendService, public dialog: MatDialog) {
   }
 
 

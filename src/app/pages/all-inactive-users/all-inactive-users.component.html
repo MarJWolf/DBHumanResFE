@@ -1,4 +1,6 @@
-<div>
+<h2 class="h2" *ngIf="users && users.length > 0">Всички неактивни потребители</h2>
+<div class="container-column">
+
   <table mat-table *ngIf="users && users.length > 0" [dataSource]="users" class="mat-elevation-z8">
 
     <ng-container matColumnDef="email" >
@@ -18,7 +20,9 @@
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Действие</th>
-      <td mat-cell *matCellDef="let user"> BUTTONS</td>
+      <td mat-cell *matCellDef="let user">
+        <button mat-raised-button color="accent" (click)="openDialog(user.id)">Промени</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

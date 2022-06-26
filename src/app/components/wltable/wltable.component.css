@@ -4,6 +4,7 @@ table {
   flex: 1;
   background-color: #244157;
   align-content: center;
+  overflow-y: scroll;
 }
 
 table th,table td{

@@ -48,6 +48,12 @@ export class BackendService {
     });
   }
 
+  cancelWorkleave(workleaveId : number, status: string){
+    return this.http.put("http://localhost:8080/workleaves/cancelWorkleave", {},{
+      params: {workleaveId, status}
+    });
+  }
+
   updateWorkleave(uwv: any){
     return this.http.put("http://localhost:8080/workleaves/update", {...uwv});
   }
@@ -55,8 +61,13 @@ export class BackendService {
   createWorkleave(workleave: any){
     return this.http.post("http://localhost:8080/workleaves/create", workleave);
   }
-  updateUser(uv: any){
+
+  updateUser(uv: User){
     return this.http.put("http://localhost:8080/users/update", {...uv});
+  }
+
+  dismissUser(uv: any){
+    return this.http.put("http://localhost:8080/users/dismiss", {...uv});
   }
 
   createUser(user: any){
@@ -90,6 +101,10 @@ export class BackendService {
 
   isManager() {
     return this.authService.getLoggedUser()!.userRole.includes("Manager");
+  }
+
+  isUser() {
+    return this.authService.getLoggedUser()!.userRole.includes("User");
   }
 
 }

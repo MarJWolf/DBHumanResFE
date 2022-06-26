@@ -3,6 +3,7 @@ import {User, UserSimp} from "../../interfaces/user";
 import {BackendService} from "../../services/backend.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UdialogComponent} from "../../components/udialog/udialog.component";
+import {SimpleDialogComponent} from "../../components/simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-all-users',
@@ -46,6 +47,20 @@ export class AllUsersComponent implements OnInit {
   openDialogNew(): void {
     this.dialog.open(UdialogComponent, {
       width: 'clamp(300px,50%,500px)',
+    });
+  }
+
+  dismissUser(Id: number): void {
+    this.dialog.open(SimpleDialogComponent, {
+      width: 'clamp(300px,50%,500px)',
+      data: {text: "Сигурни ли сте че искате да уволните този потребител?", setResult: (result:boolean) => {
+          if (result) {
+            console.log("result is true")
+            this.backendService.getById(Id).subscribe(value => {
+              this.backendService.dismissUser(value).subscribe();
+            });
+          }
+        }}
     });
   }
 

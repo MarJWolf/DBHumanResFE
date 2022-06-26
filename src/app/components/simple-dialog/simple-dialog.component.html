@@ -1,0 +1,8 @@
+<div *ngIf="data">
+  <h1 mat-dialog-title>Сигурни ли сте?</h1>
+  <div mat-dialog-content>{{data.text}}</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Не</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="onOKClick()">Да</button>
+  </div>
+</div>
