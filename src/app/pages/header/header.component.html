@@ -3,9 +3,8 @@
     <div class="header">
       <div class="align-left">
       <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
-      <button mat-raised-button color="accent">Календар</button>
         <ng-template [ngIf]="isManager()">
-<!--          //todo : stranica specialno za otpuskite na horata na koito e menidjur-->
+          <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
         </ng-template>
       <ng-template [ngIf]="isAdmin()">
         <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
@@ -18,7 +17,7 @@
           <img  src="./assets/img/Sample_User_Icon.png" alt="user img" class="img">
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Моята информация</button>
+          <button mat-menu-item (click)="openDialog()">Моята информация</button>
           <button mat-menu-item (click)="onLogOut()">Изход</button>
         </mat-menu>
     </div>

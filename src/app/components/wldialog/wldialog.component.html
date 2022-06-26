@@ -10,10 +10,10 @@
     <p>Дата на създаване</p>
     <mat-form-field appearance="fill">
       <mat-label>Изберете дата</mat-label>
-      <input matInput [formControl]="fillDateFC" [matDatepicker]="fillpicker" [matDatepickerFilter]="myFilter">
+      <input matInput [formControl]="fillDateFC" [matDatepicker]="fillpicker" >
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="fillpicker"></mat-datepicker-toggle>
-      <mat-datepicker disabled="false" #fillpicker></mat-datepicker>
+      <mat-datepicker  disabled="false" #fillpicker></mat-datepicker>
     </mat-form-field>
     <p>Начална дата</p>
     <mat-form-field appearance="fill">

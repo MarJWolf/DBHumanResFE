@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Workleave} from "../../interfaces/workleave";
-import {UserService} from "../../services/user.service";
+import {BackendService} from "../../services/backend.service";
 import {WldialogComponent} from "../wldialog/wldialog.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -15,24 +15,26 @@ export class WLtableComponent implements OnInit {
   displayedColumns: string[] = ['startDate', 'endDate', 'fillDate', 'statusManager', 'statusAdmin', 'actions']
   @Input()
   hasUsername?: boolean
+  @Input()
+  toEdit?: boolean
 
-  constructor(private userService: UserService, public dialog: MatDialog) {
+  constructor(private backendService: BackendService, public dialog: MatDialog) {
   }
 
   isAdmin() {
-    return this.userService.isAdmin()
+    return this.backendService.isAdmin()
   }
 
   isManager() {
-    return this.userService.isManager()
+    return this.backendService.isManager()
   }
 
   accept(workleaveId: number) {
-    this.userService.changeStatus(workleaveId, "Confirmed").subscribe()
+    this.backendService.changeStatus(workleaveId, "Confirmed").subscribe()
   }
 
   deny(workleaveId: number) {
-    this.userService.changeStatus(workleaveId, "Denied").subscribe()
+    this.backendService.changeStatus(workleaveId, "Denied").subscribe()
   }
 
   openDialog(workleave: Workleave): void {

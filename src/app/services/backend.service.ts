@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
-import {User, UserSimp} from "../interfaces/user";
+import {Manager, User, UserSimp} from "../interfaces/user";
 import {Workleave} from "../interfaces/workleave";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class BackendService {
 
   constructor(private http: HttpClient, private authService: AuthenticationService) {
   }
@@ -49,12 +49,18 @@ export class UserService {
   }
 
   updateWorkleave(uwv: any){
-
     return this.http.put("http://localhost:8080/workleaves/update", {...uwv});
   }
 
   createWorkleave(workleave: any){
     return this.http.post("http://localhost:8080/workleaves/create", workleave);
+  }
+  updateUser(uv: any){
+    return this.http.put("http://localhost:8080/users/update", {...uv});
+  }
+
+  createUser(user: any){
+    return this.http.post("http://localhost:8080/users/create", user);
   }
 
   getAllWorkleavesNoManager() {
@@ -64,6 +70,19 @@ export class UserService {
   getAllWorkleaves() {
     return this.http.get<Workleave[]>("http://localhost:8080/workleaves/allSimplified");
   }
+
+  getSubWorkleaves(Id: number) {
+    return this.http.get<Workleave[]>("http://localhost:8080/managers/workleavesByUserId", {params: {Id}});
+  }
+
+  getManagerNames() {
+    return this.http.get<Manager[]>("http://localhost:8080/managers/managerNames");
+  }
+
+  getById(Id: number) {
+    return this.http.get<Workleave[]>("http://localhost:8080/users/byId", {params: {Id}});
+  }
+
 
   isAdmin() {
     return this.authService.getLoggedUser()!.userRole.includes("Admin");

@@ -1,18 +1,23 @@
-<form>
-  <h1 mat-dialog-title *ngIf="data">Hi {{data.user.fullName}}</h1>
-  <div mat-dialog-content>
+<form (ngSubmit)="onOkClick()">
+  <h1 mat-dialog-title *ngIf="data">{{nameFC.value}}</h1>
+  <div mat-dialog-content style="display: grid">
+    <mat-form-field appearance="fill">
+    <mat-label>Парола</mat-label>
+    <input type="text" matInput [formControl]="passFC" placeholder="Pass249910word">
+      <mat-error *ngIf="passFC.invalid">Паролата е прекалено кратка!</mat-error>
+  </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input type="email" matInput [formControl]="emailFC" placeholder="Ex. pat@example.com">
+      <input type="email"  matInput [formControl]="emailFC" placeholder="Ex. pat@example.com">
       <mat-error *ngIf="emailFC.hasError('email') && !emailFC.hasError('required')">
-        Невалиден имейл
+        Невалиден имейл!
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Парола</mat-label>
-      <input type="text" matInput [formControl]="passFC" placeholder="Pass249910word">
+      <mat-label>Пълно име</mat-label>
+      <input type="text" matInput [formControl]="nameFC" placeholder="Екатерина Трендафилова Стойкова">
     </mat-form-field>
 
 
@@ -30,7 +35,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Оставащи дни платен отпуск</mat-label>
-      <input type="text" matInput [formControl]="daysFC" placeholder="20">
+      <input type="number" matInput [formControl]="daysFC" placeholder="20">
     </mat-form-field>
 
 
@@ -41,8 +46,16 @@
       </mat-select>
     </mat-form-field>
 
-  </div>
-  <div mat-dialog-actions>
+    <mat-form-field appearance="fill">
+      <mat-label>Мениджър</mat-label>
+      <mat-select [formControl]="managerFC">
+        <mat-option *ngFor="let man of managerKeys" [value]="man">{{man.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
 
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Назад</button>
+    <button mat-button type="submit">Запази промени</button>
   </div>
 </form>

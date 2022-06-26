@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {WLtableComponent} from "../wltable/wltable.component";
 import {Status, Type, Workleave} from "../../interfaces/workleave";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
+import {BackendService} from "../../services/backend.service";
 import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
@@ -13,10 +13,8 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class WldialogComponent implements OnInit {
 
-  typeEnum = Type;
-  typeKeys = Object.entries(this.typeEnum);
-  statusEnum = Status;
-  statusKeys = Object.entries(this.statusEnum);
+  typeKeys = Object.entries(Type);
+  statusKeys = Object.entries(Status);
   fillDateFC = new FormControl("", [Validators.required]);
   startDateFC = new FormControl("", [Validators.required]);
   endDateFC = new FormControl("", [Validators.required]);
@@ -33,7 +31,7 @@ export class WldialogComponent implements OnInit {
     statusAdmin: this.statusAdminFC
   })
 
-  constructor(private userService:UserService,
+  constructor(private backendService:BackendService,
     private authService: AuthenticationService,
     public dialogRef: MatDialogRef<WLtableComponent>,
     @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave }
@@ -72,7 +70,7 @@ export class WldialogComponent implements OnInit {
           statusManager: this.workleaveForm.value.statusManager,
           statusAdmin: this.workleaveForm.value.statusAdmin
         };
-        this.userService.updateWorkleave(finalWorkleave).subscribe();
+        this.backendService.updateWorkleave(finalWorkleave).subscribe();
       } else {
         const finalWorkleave = {
           userId: this.authService.getLoggedUser()?.userID,
@@ -83,20 +81,23 @@ export class WldialogComponent implements OnInit {
           statusManager: "Pending",
           statusAdmin: "Pending"
         };
-        this.userService.createWorkleave(finalWorkleave).subscribe();
+        this.backendService.createWorkleave(finalWorkleave).subscribe();
       }
+      this.dialogRef.close();
     }
-    this.dialogRef.close();
+    else {
+      this.workleaveForm.markAllAsTouched()
+    }
   }
 
   ngOnInit(): void {
   }
 
   isAdmin(){
-    return this.userService.isAdmin()
+    return this.backendService.isAdmin()
   }
 
   isManager(){
-    return this.userService.isManager()
+    return this.backendService.isManager()
   }
 }

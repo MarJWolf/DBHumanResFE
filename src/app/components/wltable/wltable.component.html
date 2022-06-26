@@ -26,10 +26,10 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Действия </th>
     <td mat-cell *matCellDef="let workleave">
-      <div *ngIf="!hasUsername">
+      <div *ngIf="toEdit">
         <button mat-raised-button color="accent" (click)="openDialog(workleave)">Промяна</button>
       </div>
-      <div *ngIf="hasUsername && (isManager() || isAdmin())">
+      <div *ngIf="!toEdit && (isManager() || isAdmin())">
         <button mat-raised-button color="accent" (click)="accept(workleave.id)">Одобри</button>
         <button mat-raised-button color="accent" (click)="deny(workleave.id)">Откажи</button>
       </div>

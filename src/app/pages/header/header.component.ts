@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
-import {UserService} from "../../services/user.service";
+import {BackendService} from "../../services/backend.service";
+import {UdialogComponent} from "../../components/udialog/udialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-header',
@@ -10,21 +12,29 @@ import {UserService} from "../../services/user.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService:AuthenticationService, public router:Router, private userService:UserService) { }
+  constructor(private authService:AuthenticationService, public router:Router, private backendService:BackendService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  openDialog(): void {
+    this.backendService.getById(this.authService.getLoggedUser()?.userID!).subscribe(value => {
+      this.dialog.open(UdialogComponent, {
+        width: 'clamp(300px,50%,500px)',
+        data: {user : value}
+      });
+    });
+  }
   isLogged() {
     return this.authService.getLoggedUser() != undefined;
   }
 
   isAdmin(){
-    return this.userService.isAdmin()
+    return this.backendService.isAdmin()
   }
 
   isManager(){
-    return this.userService.isManager()
+    return this.backendService.isManager()
   }
 
   onLogOut(){

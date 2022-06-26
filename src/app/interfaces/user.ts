@@ -9,8 +9,8 @@ export interface User {
   workplace: string,
   paidDays: number,
   role: string,
-  manager_id: number,
-  allWorkleaves: Workleave[]
+  managerId: number,
+  allWorkleaves?: Workleave[]
 }
 
 export interface UserSimp {
@@ -25,4 +25,13 @@ export interface UserS {
   userRole: string[]
 }
 
-export type Role = "Admin" | "User" | "Manager";
+export interface Manager{
+  Id: number | null,
+  name: string
+}
+
+export enum Role{
+  User = "User",
+  Manager = "Manager",
+  Admin = "Admin"
+}

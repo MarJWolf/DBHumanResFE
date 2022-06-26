@@ -31,6 +31,6 @@ export class AuthenticationService {
   logOut() {
     this._LoggedUser = undefined;
     sessionStorage.removeItem("LoggedUser");
-    this.http.get("http://localhost:8080/logout").subscribe();
+    this.http.post("http://localhost:8080/logout",{}).subscribe();
   }
 }
