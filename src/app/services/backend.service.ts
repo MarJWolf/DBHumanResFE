@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
-import {Manager, User, UserSimp} from "../interfaces/user";
+import {JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
 import {Workleave} from "../interfaces/workleave";
 
 @Injectable({
@@ -94,6 +94,14 @@ export class BackendService {
     return this.http.get<Workleave[]>("http://localhost:8080/users/byId", {params: {Id}});
   }
 
+  getAllWorkplaces() {
+    return this.http.get<Workplace[]>("http://localhost:8080/users/allWorkplaces");
+  }
+
+  getAllJobTitles() {
+    return this.http.get<JobTitle[]>("http://localhost:8080/users/allJobTitles");
+  }
+
 
   isAdmin() {
     return this.authService.getLoggedUser()!.userRole.includes("Admin");
@@ -107,4 +115,7 @@ export class BackendService {
     return this.authService.getLoggedUser()!.userRole.includes("User");
   }
 
+  getWorkleaveDocument(id: number) {
+    return this.http.get("http://localhost:8080/workleave",{params:{workleaveId:id}, responseType: 'blob' })
+  }
 }

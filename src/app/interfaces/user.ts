@@ -5,9 +5,9 @@ export interface User {
   email: string,
   pass: string,
   fullName: string,
-  jobTitle: string,
-  workplace: string,
-  paidDays: number,
+  jobTitleId: number,
+  workplaceId: number,
+  thisYearPaidDays: number,
   role: string,
   managerId: number,
   allWorkleaves?: Workleave[]
@@ -34,4 +34,14 @@ export enum Role{
   User = "User",
   Manager = "Manager",
   Admin = "Admin"
+}
+
+export interface JobTitle{
+  Id: number,
+  name: string
+}
+
+export interface Workplace{
+  Id: number,
+  name: string
 }

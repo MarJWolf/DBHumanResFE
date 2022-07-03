@@ -1,5 +1,6 @@
 .footer{
   background-color: #244157;
+  color: wheat;
   bottom: 0;
   width: 100%;
   display: flex;
@@ -8,6 +9,7 @@
 @media (max-width: 600px) {
   .footer{
     background-color: #244157;
+    color: wheat;
     bottom: 0;
     width: 100%;
     display: block;

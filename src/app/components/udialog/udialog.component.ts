@@ -44,9 +44,9 @@ export class UdialogComponent implements OnInit {
       this.emailFC.setValue(data.user.email)
       this.passFC.setValue(data.user.pass)
       this.nameFC.setValue(data.user.fullName)
-      this.jobFC.setValue(data.user.jobTitle)
-      this.placeFC.setValue(data.user.workplace)
-      this.daysFC.setValue(data.user.paidDays)
+      this.jobFC.setValue(data.user.jobTitleId)
+      this.placeFC.setValue(data.user.workplaceId)
+      this.daysFC.setValue(data.user.thisYearPaidDays)
       this.roleFC.setValue(data.user.role)
       this.backendService.getManagerNames().subscribe(
         value => {
@@ -89,9 +89,9 @@ export class UdialogComponent implements OnInit {
         email: this.emailFC.value,
         pass: this.passFC.value,
         fullName: this.nameFC.value,
-        jobTitle: this.jobFC.value,
-        workplace: this.placeFC.value,
-        paidDays: this.daysFC.value,
+        jobTitleId: this.jobFC.value,
+        workplaceId: this.placeFC.value,
+        thisYearPaidDays: this.daysFC.value,
         role: this.roleFC.value,
         managerId
       }

@@ -3,13 +3,18 @@
     <div class="header">
       <div class="align-left">
       <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
+        <button mat-raised-button color="accent">Календар</button>
         <ng-template [ngIf]="isManager()">
           <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
         </ng-template>
       <ng-template [ngIf]="isAdmin()">
         <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички приети отпуски</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['users'])">Всички потребители</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['inactive-users'])">Всички неактивни потребители</button>
+        <button mat-raised-button color="accent">Всяка месторабота</button>
+        <button mat-raised-button color="accent">Всяка длъжност</button>
+        <button mat-raised-button color="accent">Промяна на фирмената информация</button>
       </ng-template>
     </div>
     <div class="align-right">

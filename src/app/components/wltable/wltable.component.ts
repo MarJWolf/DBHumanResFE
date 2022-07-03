@@ -1,3 +1,4 @@
+import 'rxjs' ;
 import {Component, Input, OnInit} from '@angular/core';
 import {Workleave} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
@@ -59,5 +60,12 @@ export class WLtableComponent implements OnInit {
 
   canCancel(workleave: Workleave): boolean{
     return ((workleave.statusAdmin.toString() == "Pending" || workleave.statusManager.toString() == "Pending") && workleave.userId == this.authService.getLoggedUser()?.userID);
+  }
+
+  printDoc(id:number) {
+    this.backendService.getWorkleaveDocument(id).subscribe(file => {
+      const objectURL = URL.createObjectURL(file);
+      window.open(objectURL,'_blank');
+    })
   }
 }

@@ -58,7 +58,7 @@ export class WldialogComponent implements OnInit {
   myEndFilter = (d: any): boolean => {
     const day = (d || new Date());
     const dayOfWeek = (d || new Date()).getDay()
-    return dayOfWeek !== 0 && dayOfWeek !== 6 && day > this.startDateFC.value;
+    return dayOfWeek !== 0 && dayOfWeek !== 6 && day >= this.startDateFC.value;
   };
 
   onNoClick(): void {

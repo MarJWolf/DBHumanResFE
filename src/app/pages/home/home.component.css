@@ -33,7 +33,6 @@
   column-count: 2;
   grid-template-columns: 25% 70%;
   grid-gap: 20px;
-  padding: 20px;
   color: white;
 }
 .top {
