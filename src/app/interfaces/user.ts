@@ -7,7 +7,9 @@ export interface User {
   fullName: string,
   jobTitleId: number,
   workplaceId: number,
+  contractPaidDays: number,
   thisYearPaidDays: number,
+  lastYearPaidDays: number,
   role: string,
   managerId: number,
   allWorkleaves?: Workleave[]
@@ -37,11 +39,18 @@ export enum Role{
 }
 
 export interface JobTitle{
-  Id: number,
-  name: string
+  Id: number | null,
+  jobTitle: string
 }
 
 export interface Workplace{
+  id: number,
+  users?: User[],
+  workplace: string
+}
+
+export interface CompanyInfo{
   Id: number,
-  name: string
+  companyName: string,
+  companyCEOName: string
 }

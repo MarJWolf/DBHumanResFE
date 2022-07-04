@@ -1,23 +1,20 @@
 <header>
   <ng-template [ngIf]="isLogged()">
     <div class="header">
-      <div class="align-left">
+      <div class="align-left header-div-flex3">
       <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
-        <button mat-raised-button color="accent">Календар</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['calendar'])">Календар</button>
         <ng-template [ngIf]="isManager()">
           <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
         </ng-template>
       <ng-template [ngIf]="isAdmin()">
         <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
-        <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички приети отпуски</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['users'])">Всички потребители</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['inactive-users'])">Всички неактивни потребители</button>
-        <button mat-raised-button color="accent">Всяка месторабота</button>
-        <button mat-raised-button color="accent">Всяка длъжност</button>
-        <button mat-raised-button color="accent">Промяна на фирмената информация</button>
+        <button mat-raised-button color="accent">Допълнителна информация</button>
       </ng-template>
     </div>
-    <div class="align-right">
+    <div class="align-right header-div-flex1">
         <button mat-button [matMenuTriggerFor]="menu" class="align-right menu">Меню
           <img  src="./assets/img/Sample_User_Icon.png" alt="user img" class="img">
         </button>

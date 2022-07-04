@@ -7,8 +7,11 @@
 .header button{
   margin: 20px 5px;
 }
-.header div{
+.header-div-flex1{
   flex : 1;
+}
+.header-div-flex3{
+  flex : 3;
 }
 .menu{
   background-color: #b1f6f4;

@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   subUsersWL: Workleave[] =[]
   adminWL: Workleave[] =[]
   workleaves: Workleave[] =[]
+  userJobTitle: string
 
   constructor(private http: HttpClient, public router: Router, private backendService: BackendService, public dialog: MatDialog) {
   }
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
       userInfo.subscribe(value => {
           this.user = value;
           this.workleaves = this.user?.allWorkleaves?? [];
+          //TODO: da napravq controller vruzka get jobtitle by id i da pratq idto
           if (this.isManager() && this.user) {
             this.backendService.getSubWorkleavesByMStat(this.user.id, "Pending")?.subscribe(value => this.subUsersWL = value
             );
@@ -37,7 +39,6 @@ export class HomeComponent implements OnInit {
           if (this.isAdmin() && this.user) {
             this.backendService.getAllWorkleavesByAdminStat("Pending")?.subscribe(value => this.subUsersWL = value);
             this.backendService.getAllWorkleavesNoManager().subscribe(value => this.adminWL = value);
-
           }
         }
       );

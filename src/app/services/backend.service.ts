@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
-import {JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
+import {CompanyInfo, JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
 import {Workleave} from "../interfaces/workleave";
 
 @Injectable({
@@ -100,6 +100,10 @@ export class BackendService {
 
   getAllJobTitles() {
     return this.http.get<JobTitle[]>("http://localhost:8080/users/allJobTitles");
+  }
+
+  getCompanyInfo() {
+    return this.http.get<CompanyInfo>("http://localhost:8080/users/getCompanyInfo");
   }
 
 

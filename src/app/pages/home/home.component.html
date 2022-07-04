@@ -5,7 +5,7 @@
       <div class="grid-info">
         <h3>Име :</h3><h3 class="right"> {{user.fullName}}</h3>
         <h3>Длъжност :</h3><h3 class="right"> {{user.jobTitleId}}</h3>
-        <h3>Оставащи платени дни :</h3><h3 class="right"> {{user.thisYearPaidDays}}</h3>
+        <h3>Оставащи платени дни :</h3><h3 class="right"> {{user.thisYearPaidDays + user.lastYearPaidDays}}</h3>
       </div>
 
     </div>
@@ -28,7 +28,7 @@
   <div class="container-column bottom" *ngIf="isAdmin()">
     <h2 *ngIf="adminWL.length > 0">Потребители които нямат мениджър</h2>
     <app-wltable class="tables" [workleaves]="adminWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
-    <h2 *ngIf="subUsersWL.length > 0">Потребители които не са одобрени от Администратор</h2>
+    <h2 *ngIf="subUsersWL.length > 0">Потребители които не са обработени от Администратор</h2>
     <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
   </div>
 </div>

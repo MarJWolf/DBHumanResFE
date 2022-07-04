@@ -29,6 +29,9 @@ import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { AllInactiveUsersComponent } from './pages/all-inactive-users/all-inactive-users.component';
 import { UdialogComponent } from './components/udialog/udialog.component';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
+import { CompanyCalendarComponent } from './pages/company-calendar/company-calendar.component';
+import {MatCardModule} from "@angular/material/card";
+import { OtherDataComponent } from './pages/other-data/other-data.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -36,6 +39,7 @@ const routes: Routes = [
   { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
   { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard]},
   { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard]},
+  { path: 'calendar', component: CompanyCalendarComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
 @NgModule({
@@ -51,7 +55,9 @@ const routes: Routes = [
     AllUsersComponent,
     AllInactiveUsersComponent,
     UdialogComponent,
-    SimpleDialogComponent
+    SimpleDialogComponent,
+    CompanyCalendarComponent,
+    OtherDataComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +76,8 @@ const routes: Routes = [
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:CredentialsInterceptor, multi: true}

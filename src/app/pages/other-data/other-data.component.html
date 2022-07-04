@@ -1,0 +1,52 @@
+<div>
+  <div>
+  <p>Име на компанията: {{companyInfo.companyName}}</p>
+  <p>Име на управителя: {{companyInfo.companyCEOName}}</p>
+    <button mat-raised-button color="accent" >Промени информация на компанията</button>
+  </div>
+  <div style="display: flex">
+    <div style="flex: 1">
+      <p>Месторабота</p>
+      <button mat-raised-button color="accent" >Създай месторабота</button>
+      <table mat-table *ngIf="workplaces && workplaces.length > 0" [dataSource]="workplaces" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name" >
+          <th mat-header-cell *matHeaderCellDef> Име </th>
+          <td mat-cell *matCellDef="let workplace"> {{workplace.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Действие</th>
+          <td mat-cell *matCellDef="let workplace">
+            <button mat-raised-button color="accent" (click)="deleteWorkplace(workplace.id)">Изтрий</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div style="flex: 1">
+      <p>Длъжност</p>
+      <button mat-raised-button color="accent" >Създай длъжност</button>
+      <table mat-table *ngIf="jobTitles &&  jobTitles.length > 0" [dataSource]="jobTitles" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name" >
+          <th mat-header-cell *matHeaderCellDef> Име </th>
+          <td mat-cell *matCellDef="let job"> {{job.jobTitle}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Действие</th>
+          <td mat-cell *matCellDef="let job">
+            <button mat-raised-button color="accent" (click)="deleteJobTitle(job.Id)">Изтрий</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+
+</div>

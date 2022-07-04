@@ -20,24 +20,34 @@
       <input type="text" matInput [formControl]="nameFC" placeholder="Екатерина Трендафилова Стойкова">
     </mat-form-field>
 
-
     <mat-form-field appearance="fill">
       <mat-label>Длъжност</mat-label>
-      <input type="text" matInput [formControl]="jobFC" placeholder="Junior frontend developer">
+      <mat-select [formControl]="jobFC">
+        <mat-option *ngFor="let job of jobTitleKeys" [value]="job.Id">{{job.jobTitle}}</mat-option>
+      </mat-select>
     </mat-form-field>
-
 
     <mat-form-field appearance="fill">
       <mat-label>Месторабота</mat-label>
-      <input type="text" matInput [formControl]="placeFC" placeholder="Varna">
+      <mat-select [formControl]="placeFC">
+        <mat-option *ngFor="let place of workplaceKeys" [value]="place.id">{{place.workplace}}</mat-option>
+      </mat-select>
     </mat-form-field>
-
 
     <mat-form-field appearance="fill">
-      <mat-label>Оставащи дни платен отпуск</mat-label>
-      <input type="number" matInput [formControl]="daysFC" placeholder="20">
+      <mat-label>Дни платен отпуск по договор</mat-label>
+      <input type="number" matInput [formControl]="CdaysFC" placeholder="20">
     </mat-form-field>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Оставащи дни платен отпуск за тази година</mat-label>
+      <input type="number" matInput [formControl]="TdaysFC" placeholder="10">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Оставащи дни платен отпуск за минали година</mat-label>
+      <input type="number" matInput [formControl]="LdaysFC" placeholder="10">
+    </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Роля</mat-label>
