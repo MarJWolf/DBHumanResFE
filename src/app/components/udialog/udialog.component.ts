@@ -45,44 +45,47 @@ export class UdialogComponent implements OnInit {
               private authService:AuthenticationService,
               public dialogRef: MatDialogRef<WLtableComponent>,
               @Inject(MAT_DIALOG_DATA) public data?: { user: User }) {
-    this.managerKeys = [{Id: null, name: "Няма мениджър"}];
-    this.jobTitleKeys = [{Id: null, jobTitle: "Уволнен"}];
+    this.managerKeys = [{id: null, name: "Няма мениджър"}];
+    this.jobTitleKeys = [{id: null, jobTitle: "Уволнен"}];
+
+    this.backendService.getAllJobTitles().subscribe(value => {
+      this.jobTitleKeys.push(...value)
+      if(data && data.user.jobTitleId!= null){
+        const jobTitle = this.jobTitleKeys.find(value1 => value1.id == data.user.jobTitleId);
+        this.jobFC.setValue(jobTitle)
+      }else{
+        this.jobFC.setValue(this.jobTitleKeys[0])
+      }
+    });
+
+    this.backendService.getAllWorkplaces().subscribe(value => {
+      this.workplaceKeys = value;
+      if(data && data.user.workplaceId!= null) {
+        const workplace = this.workplaceKeys.find(value1 => value1.id == data.user.workplaceId);
+        this.placeFC.setValue(workplace)
+      }else{
+        this.placeFC.setValue(this.workplaceKeys[0])
+      }
+    });
+
+    this.backendService.getManagerNames().subscribe(value => {
+      this.managerKeys.push(...value)
+      if(data && data.user.managerId != null){
+        const manager = this.managerKeys.find(value1 => value1.id == data.user.managerId);
+        this.managerFC.setValue(manager)
+      }else{
+        this.managerFC.setValue(this.managerKeys[0])
+      }
+    });
 
     if (data) {
       this.emailFC.setValue(data.user.email)
       this.passFC.setValue(data.user.pass)
       this.nameFC.setValue(data.user.fullName)
-      this.backendService.getAllJobTitles().subscribe(value => {
-          this.jobTitleKeys.push(...value)
-          if(data.user.jobTitleId!= null){
-            this.jobFC.setValue(this.jobTitleKeys.find(value1 => value1.Id == data.user.jobTitleId))
-          }else{
-            this.jobFC.setValue(this.jobTitleKeys[0])
-          }
-        });
-      this.backendService.getAllWorkplaces().subscribe(value => {
-          this.workplaceKeys.push(...value)
-          if(data.user.workplaceId!= null) {
-            this.placeFC.setValue(this.workplaceKeys.find(value1 => value1.id == data.user.workplaceId))
-          }else{
-            this.placeFC.setValue(this.workplaceKeys[0])
-          }
-        });
       this.CdaysFC.setValue(data.user.contractPaidDays)
       this.TdaysFC.setValue(data.user.thisYearPaidDays)
       this.LdaysFC.setValue(data.user.lastYearPaidDays)
       this.roleFC.setValue(data.user.role)
-      this.backendService.getManagerNames().subscribe(value => {
-          this.managerKeys.push(...value)
-          if(data.user.managerId != null){
-            this.managerFC.setValue(this.managerKeys.find(value1 => value1.Id == data.user.managerId))
-          }else{
-            this.managerFC.setValue(this.managerKeys[0])
-          }
-        });
-    }
-    else{
-      this.managerFC.setValue(this.managerKeys[0])
     }
 
     if((data?.user.id == authService.getLoggedUser()?.userID) && !this.isAdmin()){
@@ -111,13 +114,13 @@ export class UdialogComponent implements OnInit {
         email: this.emailFC.value,
         pass: this.passFC.value,
         fullName: this.nameFC.value,
-        jobTitleId: this.jobFC.value.Id,
-        workplaceId: this.placeFC.value.Id,
+        jobTitleId: this.jobFC.value.id,
+        workplaceId: this.placeFC.value.id,
         contractPaidDays: this.CdaysFC.value,
         thisYearPaidDays: this.TdaysFC.value,
         lastYearPaidDays: this.LdaysFC.value,
         role: this.roleFC.value,
-        managerId: this.managerFC.value.Id
+        managerId: this.managerFC.value.id
       }
 
       if(this.data){

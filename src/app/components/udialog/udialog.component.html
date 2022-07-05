@@ -23,14 +23,14 @@
     <mat-form-field appearance="fill">
       <mat-label>Длъжност</mat-label>
       <mat-select [formControl]="jobFC">
-        <mat-option *ngFor="let job of jobTitleKeys" [value]="job.Id">{{job.jobTitle}}</mat-option>
+        <mat-option *ngFor="let job of jobTitleKeys" [value]="job">{{job.jobTitle}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Месторабота</mat-label>
       <mat-select [formControl]="placeFC">
-        <mat-option *ngFor="let place of workplaceKeys" [value]="place.id">{{place.workplace}}</mat-option>
+        <mat-option *ngFor="let place of workplaceKeys" [value]="place">{{place.workplace}}</mat-option>
       </mat-select>
     </mat-form-field>
 

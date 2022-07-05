@@ -32,6 +32,8 @@ import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.
 import { CompanyCalendarComponent } from './pages/company-calendar/company-calendar.component';
 import {MatCardModule} from "@angular/material/card";
 import { OtherDataComponent } from './pages/other-data/other-data.component';
+import { NameDialogComponent } from './components/name-dialog/name-dialog.component';
+import { HolidayDialogComponent } from './components/holiday-dialog/holiday-dialog.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -40,6 +42,7 @@ const routes: Routes = [
   { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard]},
   { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard]},
   { path: 'calendar', component: CompanyCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'other-data', component: OtherDataComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
 @NgModule({
@@ -57,7 +60,9 @@ const routes: Routes = [
     UdialogComponent,
     SimpleDialogComponent,
     CompanyCalendarComponent,
-    OtherDataComponent
+    OtherDataComponent,
+    NameDialogComponent,
+    HolidayDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,7 @@ export interface UserS {
 }
 
 export interface Manager{
-  Id: number | null,
+  id: number | null,
   name: string
 }
 
@@ -39,18 +39,23 @@ export enum Role{
 }
 
 export interface JobTitle{
-  Id: number | null,
+  id: number | null,
   jobTitle: string
 }
 
 export interface Workplace{
   id: number,
-  users?: User[],
   workplace: string
 }
 
 export interface CompanyInfo{
-  Id: number,
+  id: number,
   companyName: string,
   companyCEOName: string
+}
+
+export interface Holiday{
+  id: number,
+  holiday: Date,
+  name: string
 }

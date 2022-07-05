@@ -1,3 +1,30 @@
 .demo-inline-calendar-card {
   width: 600px;
 }
+.calendarPage{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color:wheat;
+}
+.calendar{
+  width: clamp(300px,100%,600px);
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  margin:10px;
+}
+.holidays{
+  width: clamp(300px,100%,600px);
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+  margin:10px;
+
+}
+.holidaysTable{
+  width: 100%;
+}
+.max-width-table-cell{
+  max-width: 200px;
+}

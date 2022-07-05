@@ -1,4 +1,37 @@
-<mat-card class="demo-inline-calendar-card">
-  <mat-calendar [(selected)]="selected"></mat-calendar>
-</mat-card>
-<p>Selected date: {{selected}}</p>
+<div class="calendarPage">
+  <div class="calendar">
+    <mat-card class="demo-inline-calendar-card">
+      <mat-calendar [(selected)]="selected"></mat-calendar>
+    </mat-card>
+
+  </div>
+  <div class="holidays" *ngIf="isAdmin()">
+    <h2>Избрана дата: {{selected && selected.toDateString()}}</h2>
+    <mat-form-field appearance="fill">
+      <input type="text" matInput [formControl]="holidayNameFC" placeholder=" ">
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="createHoliday(selected)">Създай празник</button>
+    <table mat-table *ngIf="holidays && holidays.length > 0" [dataSource]="holidays" class="mat-elevation-z8 holidaysTable">
+      <p>Празници</p>
+      <ng-container matColumnDef="name" >
+        <th mat-header-cell *matHeaderCellDef> Име </th>
+        <td mat-cell *matCellDef="let holiday" class="max-width-table-cell"> {{holiday.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date" >
+        <th mat-header-cell *matHeaderCellDef> Дата </th>
+        <td mat-cell *matCellDef="let holiday"> {{holiday.holiday}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Действие</th>
+        <td mat-cell *matCellDef="let holiday">
+          <button mat-raised-button color="accent" (click)="deleteHoliday(holiday.id)">Изтрий</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
