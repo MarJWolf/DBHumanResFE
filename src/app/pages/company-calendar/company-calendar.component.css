@@ -28,3 +28,8 @@
 .max-width-table-cell{
   max-width: 200px;
 }
+
+button.example-custom-date-class {
+  background: #6b0000;
+  border-radius: 100%;
+}

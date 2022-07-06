@@ -1,14 +1,15 @@
 <div class="calendarPage">
   <div class="calendar">
     <mat-card class="demo-inline-calendar-card">
-      <mat-calendar [(selected)]="selected"></mat-calendar>
+      <mat-calendar-toggle matSuffix *ngFor="picker"></mat-calendar-toggle>
+      <mat-calendar [(selected)]="selected" [dateClass]="dateClass" #picker></mat-calendar>
     </mat-card>
 
   </div>
   <div class="holidays" *ngIf="isAdmin()">
     <h2>Избрана дата: {{selected && selected.toDateString()}}</h2>
     <mat-form-field appearance="fill">
-      <input type="text" matInput [formControl]="holidayNameFC" placeholder=" ">
+      <input type="text" matInput [formControl]="holidayNameFC" placeholder="Ден на Бащата">
     </mat-form-field>
     <button mat-raised-button color="accent" (click)="createHoliday(selected)">Създай празник</button>
     <table mat-table *ngIf="holidays && holidays.length > 0" [dataSource]="holidays" class="mat-elevation-z8 holidaysTable">

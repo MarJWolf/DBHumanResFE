@@ -34,7 +34,7 @@
         <button mat-raised-button color="accent" (click)="accept(workleave.id)">Одобри</button>
         <button mat-raised-button color="warn" (click)="deny(workleave.id)">Откажи</button>
       </div>
-      <button mat-raised-button color="primary" *ngIf="(workleave.statusAdmin == 'Confirmed' && workleave.statusManager == 'Confirmed')" (click)="printDoc(workleave.id)">Създай документ</button>
+      <button mat-raised-button color="primary" *ngIf="(workleave.statusAdmin == 'Confirmed' && workleave.statusManager == 'Confirmed' && isAdmin())" (click)="printDoc(workleave.id)">Създай документ</button>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
