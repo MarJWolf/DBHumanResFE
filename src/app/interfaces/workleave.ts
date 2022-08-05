@@ -10,15 +10,25 @@ export interface Workleave {
   statusAdmin: Status
 }
 
-export enum Type{
- Paid= "Платен",
- Unpaid = "Неплатен",
- Special = "Специален"
+export enum Type {
+  Paid = "Платен",
+  Unpaid = "Неплатен",
+  Special = "Специален"
 }
 
-export enum Status{
-  Pending= "Изчакващ",
-  Confirmed = "Потвърден",
-  Denied = "Отказан",
-  Cancelled = "Отменен"
+export type Status =
+  "Pending"|
+  "Confirmed"|
+  "Denied"|
+  "Cancelled"
+export const allStatus:Status[] =   ["Pending",
+  "Confirmed",
+  "Denied",
+  "Cancelled"]
+
+export const statusTranslation = {
+  Pending: "Изчакващ",
+  Confirmed: "Потвърден",
+  Denied: "Отказан",
+  Cancelled: "Отменен"
 }

@@ -1,4 +1,4 @@
-<table mat-table *ngIf="workleaves && workleaves.length > 0" [dataSource]="workleaves" class="mat-elevation-z8 align-center">
+<table mat-table *ngIf="workleaves && workleaves.length > 0" [dataSource]="workleaves" class="mat-elevation-z8 align-center table">
   <ng-container matColumnDef="userName" *ngIf="hasUsername">
     <th mat-header-cell *matHeaderCellDef> Име </th>
     <td mat-cell *matCellDef="let workleave"> {{workleave.userName}} </td>
@@ -17,11 +17,11 @@
   </ng-container>
   <ng-container matColumnDef="statusManager">
     <th mat-header-cell *matHeaderCellDef> Статус - Мениджър </th>
-    <td mat-cell *matCellDef="let workleave"> {{workleave.statusManager}} </td>
+    <td mat-cell *matCellDef="let workleave"> <app-status-icon [status]="workleave.statusManager"></app-status-icon></td>
   </ng-container>
   <ng-container matColumnDef="statusAdmin">
     <th mat-header-cell *matHeaderCellDef> Статус - Админ </th>
-    <td mat-cell *matCellDef="let workleave"> {{workleave.statusAdmin}} </td>
+    <td mat-cell *matCellDef="let workleave"><app-status-icon [status]="workleave.statusAdmin"></app-status-icon></td>
   </ng-container>
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Действия </th>

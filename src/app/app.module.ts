@@ -34,6 +34,7 @@ import {MatCardModule} from "@angular/material/card";
 import { OtherDataComponent } from './pages/other-data/other-data.component';
 import { NameDialogComponent } from './components/name-dialog/name-dialog.component';
 import { HolidayDialogComponent } from './components/holiday-dialog/holiday-dialog.component';
+import { StatusIconComponent } from './components/status-icon/status-icon.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -62,7 +63,8 @@ const routes: Routes = [
     CompanyCalendarComponent,
     OtherDataComponent,
     NameDialogComponent,
-    HolidayDialogComponent
+    HolidayDialogComponent,
+    StatusIconComponent
   ],
   imports: [
     BrowserModule,

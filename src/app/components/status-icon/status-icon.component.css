@@ -1,0 +1,14 @@
+.flex > div{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+mat-icon{
+  padding: 5px;
+}
+.green{
+  color: green;
+}
+.red{
+  color: red;
+}

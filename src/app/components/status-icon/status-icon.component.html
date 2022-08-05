@@ -1,0 +1,18 @@
+<div *ngIf="translatedStatus" class="flex">
+  <div *ngIf="translatedStatus == 'Потвърден'" class="green">
+    <mat-icon>check_circle</mat-icon>
+    {{translatedStatus}}
+  </div>
+  <div *ngIf="translatedStatus == 'Отказан'" class="red">
+    <mat-icon>clear</mat-icon>
+    {{translatedStatus}}
+  </div>
+  <div *ngIf="translatedStatus == 'Отменен'">
+    <mat-icon>block</mat-icon>
+    {{translatedStatus}}
+  </div>
+  <div *ngIf="translatedStatus == 'Изчакващ'">
+    <mat-icon>access_time</mat-icon>
+    {{translatedStatus}}
+  </div>
+</div>

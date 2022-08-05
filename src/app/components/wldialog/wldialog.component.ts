@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {WLtableComponent} from "../wltable/wltable.component";
-import {Status, Type, Workleave} from "../../interfaces/workleave";
+import {allStatus, Status, statusTranslation, Type, Workleave} from "../../interfaces/workleave";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BackendService} from "../../services/backend.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -16,7 +16,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class WldialogComponent implements OnInit {
 
   typeKeys = Object.entries(Type);
-  statusKeys = Object.entries(Status);
+  statusKeys = allStatus.map(value => ({value: value,translation: statusTranslation[value]}))
   fillDateFC = new FormControl("", [Validators.required]);
   startDateFC = new FormControl("", [Validators.required]);
   endDateFC = new FormControl("", [Validators.required]);

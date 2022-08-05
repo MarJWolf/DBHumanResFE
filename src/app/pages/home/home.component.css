@@ -71,5 +71,6 @@
 .left{
   grid-column:1;
 }.right{
+  text-align: right;
   grid-column:2;
 }
