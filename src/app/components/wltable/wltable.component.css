@@ -12,7 +12,7 @@ table th,table td{
 }
 
 button{
-  margin: 5px;
+  margin: 5px 5px 20px 5px;
 }
 
 .container-column{
@@ -30,10 +30,10 @@ h2{
 }
 
 
-.button{
-  margin-bottom: 20px;
-}
-
 .table th{
   padding: 0 10px;
+}
+
+.print{
+  color: #022b3d;
 }

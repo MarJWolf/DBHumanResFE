@@ -8,11 +8,10 @@ export interface User {
   jobTitleId: number,
   workplaceId: number,
   contractPaidDays: number,
-  thisYearPaidDays: number,
-  lastYearPaidDays: number,
   role: string,
   managerId: number,
-  allWorkleaves?: Workleave[]
+  allWorkleaves?: Workleave[],
+  allDays?: Days[]
 }
 
 export interface UserSimp {
@@ -58,4 +57,12 @@ export interface Holiday{
   id: number,
   holiday: Date,
   name: string
+}
+
+export interface Days{
+  id: number,
+  userDaysId: number,
+  days: number,
+  year: number,
+  use: boolean
 }

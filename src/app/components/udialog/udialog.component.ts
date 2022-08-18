@@ -83,8 +83,6 @@ export class UdialogComponent implements OnInit {
       this.passFC.setValue(data.user.pass)
       this.nameFC.setValue(data.user.fullName)
       this.CdaysFC.setValue(data.user.contractPaidDays)
-      this.TdaysFC.setValue(data.user.thisYearPaidDays)
-      this.LdaysFC.setValue(data.user.lastYearPaidDays)
       this.roleFC.setValue(data.user.role)
     }
 
