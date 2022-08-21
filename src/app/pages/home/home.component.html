@@ -16,20 +16,20 @@
           <button mat-raised-button color="accent" (click)="openDialog()">Създай своя отпуск</button>
         </div>
 
-        <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="false" [toEdit]="true"></app-wltable>
+        <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="false" [toEdit]="true" [fetchWorkleaves]="loadTables"></app-wltable>
       </div>
     </div>
   </div>
 
   <div class="container-column bottom" *ngIf="isManager()">
     <h2 *ngIf=" subUsersWL.length > 0">Потребители които вие менажирате</h2>
-    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
+    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false" [fetchWorkleaves]="loadTables"></app-wltable>
   </div>
   <div class="container-column bottom" *ngIf="isAdmin()">
     <h2 *ngIf="adminWL.length > 0">Потребители които нямат мениджър</h2>
-    <app-wltable class="tables" [workleaves]="adminWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
+    <app-wltable class="tables" [workleaves]="adminWL" [hasUsername]="true" [toEdit]="false" [fetchWorkleaves]="loadTables"></app-wltable>
     <h2 *ngIf="subUsersWL.length > 0">Потребители които не са обработени от Администратор</h2>
-    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false"></app-wltable>
+    <app-wltable class="tables" [workleaves]="subUsersWL" [hasUsername]="true" [toEdit]="false" [fetchWorkleaves]="loadTables"></app-wltable>
   </div>
 </div>
 

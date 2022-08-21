@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Workleave} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -20,19 +20,25 @@ export class AllWorkleavesComponent implements OnInit {
     let userInfo = this.backendService.getLoggedInUser();
     if (userInfo) {
       userInfo.subscribe(value => {
-        this.user = value;
-        let workleaveInfo = this.backendService.getAllWorkleaves();
-        if(this.backendService.isManager()){
-          workleaveInfo = this.backendService.getSubWorkleaves(this.user.id);
-        }
-          if (workleaveInfo)
-            workleaveInfo.subscribe(
-              value1 => {
-                this.workleaves = value1;
-              }
-            );
+          this.user = value;
+          this.getWorkleaves();
         }
       );
     }
+  }
+
+  public getWorkleaves() {
+    let workleaveInfo = this.backendService.getAllWorkleaves();
+    console.log("im heres")
+
+    if (this.user && this.backendService.isManager()) {
+      workleaveInfo = this.backendService.getSubWorkleaves(this.user.id);
+    }
+    if (workleaveInfo)
+      workleaveInfo.subscribe(
+        value1 => {
+          this.workleaves = value1;
+        }
+      );
   }
 }

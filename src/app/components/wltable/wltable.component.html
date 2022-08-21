@@ -29,12 +29,14 @@
       <div *ngIf="toEdit">
         <button [disabled]="(workleave.statusAdmin != 'Pending' || workleave.statusManager != 'Pending') && isUser()" mat-raised-button color="accent" (click)="openDialog(workleave)">Промяна</button>
         <button *ngIf="canCancel(workleave)" mat-raised-button color="warn" (click)="cancel(workleave.id)">Отмени</button>
+        <button mat-raised-button color="primary" class="print" *ngIf="(workleave.statusAdmin == 'Confirmed' && workleave.statusManager == 'Confirmed' && isAdmin())" (click)="printDoc(workleave.id)">Виж документ</button>
+        <button mat-raised-button color="primary" class="print" *ngIf="(workleave.statusAdmin == 'Confirmed' && workleave.statusManager == 'Confirmed' && isAdmin())" (click)="printNewDoc(workleave.id)">Създай нов документ</button>
       </div>
       <div *ngIf="!toEdit && (isManager() || isAdmin())">
         <button mat-raised-button color="accent" (click)="accept(workleave.id)">Одобри</button>
         <button mat-raised-button color="warn" (click)="deny(workleave.id)">Откажи</button>
       </div>
-      <button mat-raised-button color="primary" class="print" *ngIf="(workleave.statusAdmin == 'Confirmed' && workleave.statusManager == 'Confirmed' && isAdmin())" (click)="printDoc(workleave.id)">Създай документ</button>
+
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

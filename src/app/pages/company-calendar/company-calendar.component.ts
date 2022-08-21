@@ -13,7 +13,7 @@ import {MatCalendarCellClassFunction} from "@angular/material/datepicker";
   encapsulation: ViewEncapsulation.None
 })
 export class CompanyCalendarComponent implements OnInit {
-  //todo: check  Highlighting specific dates in calendar https://material.angular.io/components/datepicker/overview#datepicker-date-class
+
   selected: Date | null;
   holidays: Holiday[] = []
   returnStatement: string = ''

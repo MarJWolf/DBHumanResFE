@@ -1,6 +1,6 @@
 <div class="max-width">
   <div class="container-column" >
     <h2 class="h2" *ngIf="workleaves.length > 0">Всички отпуски</h2>
-    <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="true" [toEdit]="true"></app-wltable>
+    <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="true" [toEdit]="true" [fetchWorkleaves]="getWorkleaves"></app-wltable>
   </div>
 </div>

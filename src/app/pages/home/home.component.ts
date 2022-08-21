@@ -22,41 +22,48 @@ export class HomeComponent implements OnInit {
   userJobTitle?: string
   userTotalDays: number = 0
 
-  constructor(private http: HttpClient, public router: Router, private backendService: BackendService, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public router: Router, private backendService: BackendService,public dialog: MatDialog) {
   }
 
 
   ngOnInit(): void {
-    let userInfo = this.backendService.getLoggedInUser();
+    this.getUserInfo();
+  }
 
-    if (userInfo) {
-      userInfo.subscribe(value => {
+  public getUserInfo() {
+
+      this.backendService.getLoggedInUser().subscribe(value => {
           this.user = value;
-          this.workleaves = this.user?.allWorkleaves?? [];
-          this.userDays = this.user?.allDays?? [];
+          this.workleaves = this.user?.allWorkleaves ?? [];
+          this.userDays = this.user?.allDays ?? [];
           this.backendService.getJobTitleById(this.user.jobTitleId).subscribe(
             value1 => {
               this.userJobTitle = value1.jobTitle;
             })
 
           this.userDays.map(days => {
-            if(days.use){
+            if (days.use) {
               this.userTotalDays = this.userTotalDays + days.days
             }
           })
-
-          if (this.isManager() && this.user) {
-            this.backendService.getSubWorkleavesByMStat(this.user.id, "Pending")?.subscribe(value => this.subUsersWL = value
-            );
-          }
-          if (this.isAdmin() && this.user) {
-            this.backendService.getAllWorkleavesByAdminStat("Pending")?.subscribe(value => this.subUsersWL = value);
-            this.backendService.getAllWorkleavesNoManager().subscribe(value => this.adminWL = value);
-          }
+          this.getWorkleaves(value.id);
         }
       );
+  }
+  public loadTables = () => {
+    this.backendService.getLoggedInUser().subscribe(value => {
+      this.getWorkleaves(value.id);
+    })
+  }
+  getWorkleaves = (userID:number) => {
+    if (this.isManager() && userID) {
+      this.backendService.getSubWorkleavesByMStat(userID, "Pending")?.subscribe(value => this.subUsersWL = value
+      );
     }
-
+    if (this.isAdmin() && userID) {
+      this.backendService.getAllWorkleavesByAdminStat("Pending")?.subscribe(value => this.subUsersWL = value);
+      this.backendService.getAllWorkleavesNoManager().subscribe(value => this.adminWL = value);
+    }
   }
 
   openDialog(): void {

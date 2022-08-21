@@ -16,16 +16,17 @@ export class BackendService {
 
   getLoggedInUser() {
     const loggedUser = this.authService.getLoggedUser();
-    if (loggedUser) {
       return this.http.get<User>("http://localhost:8080/users/byId", {
         params: {Id: loggedUser.userID}
       });
-    }
-    return null;
   }
 
   getAllUsers() {
     return this.http.get<UserSimp[]>("http://localhost:8080/users/allSimplified");
+  }
+
+  getAllUsersNotS() {
+    return this.http.get<UserSimp[]>("http://localhost:8080/users/all");
   }
 
   getAllInactiveUsers() {
@@ -159,6 +160,9 @@ export class BackendService {
   // document
   getWorkleaveDocument(id: number) {
     return this.http.get("http://localhost:8080/workleave",{params:{workleaveId:id}, responseType: 'blob' })
+  }
+  getNewWorkleaveDocument(id: number) {
+    return this.http.get("http://localhost:8080/workleave",{params:{workleaveId:id, createAgain: true}, responseType: 'blob' })
   }
 
   //holiday

@@ -38,13 +38,13 @@ import { StatusIconComponent } from './components/status-icon/status-icon.compon
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
-  { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard]},
-  { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard]},
-  { path: 'calendar', component: CompanyCalendarComponent, canActivate: [AuthGuard]},
-  { path: 'other-data', component: OtherDataComponent, canActivate: [AuthGuard]},
-  { path: '**', redirectTo: '/home', pathMatch: 'full' }
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: 'calendar', component: CompanyCalendarComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: 'other-data', component: OtherDataComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
+  { path: '**', redirectTo: '/home', pathMatch: 'full' , runGuardsAndResolvers: 'always'}
 ]
 @NgModule({
   declarations: [
@@ -70,7 +70,7 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -89,6 +89,7 @@ const routes: Routes = [
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:CredentialsInterceptor, multi: true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [RouterModule]
 })
 export class AppModule { }

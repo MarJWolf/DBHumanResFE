@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {WLtableComponent} from "../wltable/wltable.component";
-import {allStatus, Status, statusTranslation, Type, Workleave} from "../../interfaces/workleave";
+import {allStatus, statusTranslation, Type, Workleave} from "../../interfaces/workleave";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BackendService} from "../../services/backend.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -85,6 +85,7 @@ export class WldialogComponent implements OnInit {
         };
         this.backendService.updateWorkleave(finalWorkleave).subscribe(
           () => {
+            location.reload();
             this.dialogRef.close();
           }
         );
@@ -101,6 +102,7 @@ export class WldialogComponent implements OnInit {
         };
         this.backendService.createWorkleave(finalWorkleave).subscribe({
             next: () => {
+              location.reload();
               this.dialogRef.close();
             },
             error: (err:HttpErrorResponse) => {

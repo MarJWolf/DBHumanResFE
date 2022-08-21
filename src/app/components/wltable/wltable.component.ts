@@ -19,6 +19,8 @@ export class WLtableComponent implements OnInit {
   hasUsername?: boolean
   @Input()
   toEdit?: boolean
+  @Input()
+  fetchWorkleaves = () => {};
 
   constructor(private backendService: BackendService, public dialog: MatDialog, private authService: AuthenticationService) {
   }
@@ -31,20 +33,30 @@ export class WLtableComponent implements OnInit {
     return this.backendService.isManager()
   }
 
-  isUser(){
+  isUser() {
     return this.backendService.isUser()
   }
 
   accept(workleaveId: number) {
-    this.backendService.changeStatus(workleaveId, "Confirmed").subscribe()
+    this.backendService.changeStatus(workleaveId, "Confirmed").subscribe(
+      () => {
+        this.fetchWorkleaves()
+      })
+
   }
 
   deny(workleaveId: number) {
-    this.backendService.changeStatus(workleaveId, "Denied").subscribe()
+    this.backendService.changeStatus(workleaveId, "Denied").subscribe(
+      () => {
+        this.fetchWorkleaves()
+      })
   }
 
   cancel(workleaveId: number) {
-    this.backendService.cancelWorkleave(workleaveId, "Cancelled").subscribe()
+    this.backendService.cancelWorkleave(workleaveId, "Cancelled").subscribe(
+      () => {
+        this.fetchWorkleaves()
+      })
   }
 
   openDialog(workleave: Workleave): void {
@@ -58,14 +70,21 @@ export class WLtableComponent implements OnInit {
     this.displayedColumns = this.hasUsername ? ['userName', ...this.displayedColumns] : this.displayedColumns;
   }
 
-  canCancel(workleave: Workleave): boolean{
+  canCancel(workleave: Workleave): boolean {
     return ((workleave.statusAdmin.toString() == "Pending" || workleave.statusManager.toString() == "Pending") && workleave.userId == this.authService.getLoggedUser()?.userID);
   }
 
-  printDoc(id:number) {
+  printDoc(id: number) {
     this.backendService.getWorkleaveDocument(id).subscribe(file => {
       const objectURL = URL.createObjectURL(file);
-      window.open(objectURL,'_blank');
+      window.open(objectURL, '_blank');
     })
   }
+  printNewDoc(id: number) {
+    this.backendService.getNewWorkleaveDocument(id).subscribe(file => {
+      const objectURL = URL.createObjectURL(file);
+      window.open(objectURL, '_blank');
+    })
+  }
+
 }
