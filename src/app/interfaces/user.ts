@@ -60,7 +60,7 @@ export interface Holiday{
 }
 
 export interface Days{
-  id: number,
+  id?: number,
   userDaysId: number,
   days: number,
   year: number,

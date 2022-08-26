@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
-import {CompanyInfo, Holiday, JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
-import {Workleave} from "../interfaces/workleave";
+import {CompanyInfo, Days, Holiday, JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
+import {CalendarData, Workleave} from "../interfaces/workleave";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class BackendService {
 
   getLoggedInUser() {
     const loggedUser = this.authService.getLoggedUser();
+    if(!loggedUser) return undefined;
       return this.http.get<User>("http://localhost:8080/users/byId", {
         params: {Id: loggedUser.userID}
       });
@@ -56,6 +58,21 @@ export class BackendService {
   isUser() {
     return this.authService.getLoggedUser()!.userRole.includes("User");
   }
+
+  //days
+
+  saveDays(days: Days){
+    return this.http.post<Days[]>("http://localhost:8080/users/createDays", days);
+  }
+
+  deleteDays(Id: number){
+    return this.http.delete("http://localhost:8080/users/deleteDays", { params: {Id}});
+  }
+
+  getDaysByUserId(userID: number){
+    return this.http.get<Days[]>("http://localhost:8080/users/allDaysByUserId", { params: {userID}});
+  }
+
 
   // workplace
 
@@ -177,5 +194,9 @@ export class BackendService {
 
   createHoliday(holidayDate:Date,holidayName:string) {
     return this.http.put("http://localhost:8080/holidays/createHoliday",{date:holidayDate,localName:holidayName }, {});
+  }
+
+  getCalendarData(year:number):Observable<CalendarData> {
+    return this.http.get<CalendarData>("http://localhost:8080/workleaves/calendar",{params:{year}})
   }
 }

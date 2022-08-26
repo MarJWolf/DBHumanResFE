@@ -7,12 +7,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatCalendarCellClassFunction} from "@angular/material/datepicker";
 
 @Component({
-  selector: 'app-company-calendar',
-  templateUrl: './company-calendar.component.html',
-  styleUrls: ['./company-calendar.component.css'],
+  selector: 'app-holiday-calendar',
+  templateUrl: './holiday-calendar.component.html',
+  styleUrls: ['./holiday-calendar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class CompanyCalendarComponent implements OnInit {
+export class HolidayCalendarComponent implements OnInit {
 
   selected: Date | null;
   holidays: Holiday[] = []
@@ -57,7 +57,9 @@ export class CompanyCalendarComponent implements OnInit {
           text: "Сигурни ли сте че искате да създадете този празник?", setResult: (result: boolean) => {
             if (result) {
               holidayDate.setHours(12);
-              this.backendService.createHoliday(holidayDate,this.holidayNameFC.value).subscribe();
+              this.backendService.createHoliday(holidayDate,this.holidayNameFC.value).subscribe(
+                () => location.reload()
+              );
             }
           }
         }
@@ -73,7 +75,7 @@ export class CompanyCalendarComponent implements OnInit {
       data: {
         text: "Сигурни ли сте че искате да изтриете този празник?", setResult: (result: boolean) => {
           if (result) {
-            this.backendService.deleteHoliday(id).subscribe()
+            this.backendService.deleteHoliday(id).subscribe(() => location.reload())
           }
         }
       }

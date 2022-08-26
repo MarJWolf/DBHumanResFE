@@ -15,14 +15,14 @@ import {WldialogComponent} from "../../components/wldialog/wldialog.component";
 export class HomeComponent implements OnInit {
 
   user?: User
-  subUsersWL: Workleave[] =[]
-  adminWL: Workleave[] =[]
-  workleaves: Workleave[] =[]
+  subUsersWL: Workleave[] = []
+  adminWL: Workleave[] = []
+  workleaves: Workleave[] = []
   userDays: Days[] = []
   userJobTitle?: string
   userTotalDays: number = 0
 
-  constructor(private http: HttpClient, public router: Router, private backendService: BackendService,public dialog: MatDialog) {
+  constructor(private http: HttpClient, public router: Router, private backendService: BackendService, public dialog: MatDialog) {
   }
 
 
@@ -31,8 +31,10 @@ export class HomeComponent implements OnInit {
   }
 
   public getUserInfo() {
+    let userInfo = this.backendService.getLoggedInUser();
 
-      this.backendService.getLoggedInUser().subscribe(value => {
+    if (userInfo) {
+      userInfo.subscribe(value => {
           this.user = value;
           this.workleaves = this.user?.allWorkleaves ?? [];
           this.userDays = this.user?.allDays ?? [];
@@ -49,13 +51,19 @@ export class HomeComponent implements OnInit {
           this.getWorkleaves(value.id);
         }
       );
+    }
   }
+
   public loadTables = () => {
-    this.backendService.getLoggedInUser().subscribe(value => {
-      this.getWorkleaves(value.id);
-    })
+    let userInfo = this.backendService.getLoggedInUser();
+
+    if (userInfo) {
+      userInfo.subscribe(value => {
+        this.getWorkleaves(value.id);
+      })
+    }
   }
-  getWorkleaves = (userID:number) => {
+  getWorkleaves = (userID: number) => {
     if (this.isManager() && userID) {
       this.backendService.getSubWorkleavesByMStat(userID, "Pending")?.subscribe(value => this.subUsersWL = value
       );

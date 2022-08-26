@@ -29,22 +29,27 @@ import { AllUsersComponent } from './pages/all-users/all-users.component';
 import { AllInactiveUsersComponent } from './pages/all-inactive-users/all-inactive-users.component';
 import { UdialogComponent } from './components/udialog/udialog.component';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
-import { CompanyCalendarComponent } from './pages/company-calendar/company-calendar.component';
+import { HolidayCalendarComponent } from './pages/holiday-calendar/holiday-calendar.component';
 import {MatCardModule} from "@angular/material/card";
 import { OtherDataComponent } from './pages/other-data/other-data.component';
 import { NameDialogComponent } from './components/name-dialog/name-dialog.component';
 import { HolidayDialogComponent } from './components/holiday-dialog/holiday-dialog.component';
 import { StatusIconComponent } from './components/status-icon/status-icon.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { WorkleaveCalendarComponent } from './pages/workleave-calendar/workleave-calendar.component';
+import { CalendarCellComponent } from './components/calendar-cell/calendar-cell.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: 'calendar', component: CompanyCalendarComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: 'other-data', component: OtherDataComponent, canActivate: [AuthGuard], runGuardsAndResolvers: 'always'},
-  { path: '**', redirectTo: '/home', pathMatch: 'full' , runGuardsAndResolvers: 'always'}
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'users', component: AllUsersComponent, canActivate: [AuthGuard]},
+  { path: 'inactive-users', component: AllInactiveUsersComponent, canActivate: [AuthGuard]},
+  { path: 'workleaves', component: AllWorkleavesComponent, canActivate: [AuthGuard]},
+  { path: 'calendar/holiday', component: HolidayCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'calendar/workleaves', component: WorkleaveCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'other-data', component: OtherDataComponent, canActivate: [AuthGuard]},
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ]
 @NgModule({
   declarations: [
@@ -60,36 +65,39 @@ const routes: Routes = [
     AllInactiveUsersComponent,
     UdialogComponent,
     SimpleDialogComponent,
-    CompanyCalendarComponent,
+    HolidayCalendarComponent,
     OtherDataComponent,
     NameDialogComponent,
     HolidayDialogComponent,
-    StatusIconComponent
+    StatusIconComponent,
+    WorkleaveCalendarComponent,
+    CalendarCellComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatListModule,
-    MatTableModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatCardModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        RouterModule.forRoot(routes),
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatListModule,
+        MatTableModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatCardModule,
+        MatTabsModule,
+        MatCheckboxModule
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:CredentialsInterceptor, multi: true}
   ],
-  bootstrap: [AppComponent],
-  exports: [RouterModule]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

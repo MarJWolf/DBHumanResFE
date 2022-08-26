@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BackendService} from "../../services/backend.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {WLtableComponent} from "../wltable/wltable.component";
-import {JobTitle, Manager, Role, User, Workplace} from "../../interfaces/user";
+import {Days, JobTitle, Manager, Role, User, Workplace} from "../../interfaces/user";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../services/authentication.service";
 
@@ -18,15 +18,21 @@ export class UdialogComponent implements OnInit {
   jobFC = new FormControl("");
   placeFC = new FormControl("");
   CdaysFC = new FormControl("", [Validators.required, Validators.min(0)]);
-  TdaysFC = new FormControl("", [Validators.required, Validators.min(0)]);
-  LdaysFC = new FormControl("", [Validators.required, Validators.min(0)]);
   roleFC = new FormControl("", [Validators.required]);
   managerFC = new FormControl("");
 
-  managerKeys:Manager[] = []
+  managerKeys: Manager[] = []
   roleKeys = Object.entries(Role);
-  jobTitleKeys:JobTitle[] = []
-  workplaceKeys:Workplace[] = []
+  jobTitleKeys: JobTitle[] = []
+  workplaceKeys: Workplace[] = []
+  days?: Days[] = []
+
+  setDays = (days?: Days[]) => {
+    this.days = days?.sort((a: Days, b: Days) =>
+      b.year - a.year);
+  }
+
+  displayedColumns: string[] = ['paidDays', 'year', 'use', 'actions']
 
   userForm = new FormGroup({
     email: this.emailFC,
@@ -35,14 +41,32 @@ export class UdialogComponent implements OnInit {
     jobTitleId: this.jobFC,
     workplaceId: this.placeFC,
     contractPaidDays: this.CdaysFC,
-    thisYearPaidDays: this.TdaysFC,
-    lastYearPaidDays: this.LdaysFC,
     role: this.roleFC,
     managerId: this.managerFC
   })
 
-  constructor(private backendService:BackendService,
-              private authService:AuthenticationService,
+  daysFC = new FormControl("", [Validators.required, Validators.min(0), Validators.max(this.CdaysFC.value)])
+  yearFC = new FormControl("", [Validators.required]);
+  isUsable = new FormControl("");
+
+  daysForm = new FormGroup({daysFC: this.daysFC, yearFC: this.yearFC, isUsable: this.isUsable})
+
+
+  showNewDaysFields = false;
+  toggleAdd = () => {
+    this.showNewDaysFields = !this.showNewDaysFields;
+  }
+  years: number[] = Array.from({length: 50}, (_, i) => (new Date()).getFullYear() - i);
+  onCheckboxChange = (isChecked: boolean, id: number) => {
+    this.days?.map((value) => {
+      if (value.id == id) {
+        value.use = isChecked
+      }
+    })
+  };
+
+  constructor(private backendService: BackendService,
+              private authService: AuthenticationService,
               public dialogRef: MatDialogRef<WLtableComponent>,
               @Inject(MAT_DIALOG_DATA) public data?: { user: User }) {
     this.managerKeys = [{id: null, name: "Няма мениджър"}];
@@ -50,30 +74,30 @@ export class UdialogComponent implements OnInit {
 
     this.backendService.getAllJobTitles().subscribe(value => {
       this.jobTitleKeys.push(...value)
-      if(data && data.user.jobTitleId!= null){
+      if (data && data.user.jobTitleId != null) {
         const jobTitle = this.jobTitleKeys.find(value1 => value1.id == data.user.jobTitleId);
         this.jobFC.setValue(jobTitle)
-      }else{
+      } else {
         this.jobFC.setValue(this.jobTitleKeys[0])
       }
     });
 
     this.backendService.getAllWorkplaces().subscribe(value => {
       this.workplaceKeys = value;
-      if(data && data.user.workplaceId!= null) {
+      if (data && data.user.workplaceId != null) {
         const workplace = this.workplaceKeys.find(value1 => value1.id == data.user.workplaceId);
         this.placeFC.setValue(workplace)
-      }else{
+      } else {
         this.placeFC.setValue(this.workplaceKeys[0])
       }
     });
 
     this.backendService.getManagerNames().subscribe(value => {
       this.managerKeys.push(...value)
-      if(data && data.user.managerId != null){
+      if (data && data.user.managerId != null) {
         const manager = this.managerKeys.find(value1 => value1.id == data.user.managerId);
         this.managerFC.setValue(manager)
-      }else{
+      } else {
         this.managerFC.setValue(this.managerKeys[0])
       }
     });
@@ -84,16 +108,15 @@ export class UdialogComponent implements OnInit {
       this.nameFC.setValue(data.user.fullName)
       this.CdaysFC.setValue(data.user.contractPaidDays)
       this.roleFC.setValue(data.user.role)
+      this.setDays(data.user.allDays)
     }
 
-    if((data?.user.id == authService.getLoggedUser()?.userID) && !this.isAdmin()){
+    if ((data?.user.id == authService.getLoggedUser()?.userID) && !this.isAdmin()) {
       this.emailFC.disable();
       this.nameFC.disable();
       this.jobFC.disable();
       this.placeFC.disable();
       this.CdaysFC.disable();
-      this.TdaysFC.disable();
-      this.LdaysFC.disable();
       this.roleFC.disable();
       this.managerFC.disable();
     }
@@ -106,8 +129,8 @@ export class UdialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onOkClick(): void{
-    if(this.userForm.valid) {
+  onOkClick(): void {
+    if (this.userForm.valid) {
       const tempUser = {
         email: this.emailFC.value,
         pass: this.passFC.value,
@@ -115,29 +138,64 @@ export class UdialogComponent implements OnInit {
         jobTitleId: this.jobFC.value.id,
         workplaceId: this.placeFC.value.id,
         contractPaidDays: this.CdaysFC.value,
-        thisYearPaidDays: this.TdaysFC.value,
-        lastYearPaidDays: this.LdaysFC.value,
         role: this.roleFC.value,
-        managerId: this.managerFC.value.id
+        managerId: this.managerFC.value.id,
+        days: this.days
       }
 
-      if(this.data){
+      if (this.data) {
         const finalUser: User = {
           id: this.data.user.id,
           ...tempUser
         }
-        this.backendService.updateUser(finalUser).subscribe();
-      }
-      else{
-        this.backendService.createUser(tempUser).subscribe();
+        this.backendService.updateUser(finalUser).subscribe(
+          () => {
+            location.reload();
+          }
+        );
+      } else {
+        this.backendService.createUser(tempUser).subscribe(
+          () => {
+            location.reload();
+          }
+        );
       }
       this.dialogRef.close();
-    }else{
+    } else {
       this.userForm.markAllAsTouched()
     }
   }
 
-  isAdmin(){
+  isAdmin() {
     return this.backendService.isAdmin()
   }
+
+  saveNewDays() {
+    if (this.daysForm.valid && this.data?.user) {
+      const formDays: Days = {
+        userDaysId: this.data.user.id,
+        days: Number(this.daysFC.value),
+        year: Number(this.yearFC.value),
+        use: this.isUsable.value
+      }
+      this.backendService.saveDays(formDays).subscribe((value: Days[]) => {
+          this.setDays(value)
+        }
+      )
+    }
+
+  }
+
+  deleteDays(Id: number) {
+    this.backendService.deleteDays(Id).subscribe(() => {
+      if (this.data) {
+        this.backendService.getDaysByUserId(this.data.user.id).subscribe(
+          (value) => {
+            this.setDays(value)
+          }
+        )
+      }
+    });
+  }
+
 }

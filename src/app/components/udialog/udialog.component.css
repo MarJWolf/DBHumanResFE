@@ -1,0 +1,27 @@
+mat-tab {
+  overflow: hidden;
+}
+table {
+  width: 90%;
+  margin: 20px;
+  flex: 1;
+  align-content: center;
+  overflow-y: scroll;
+}
+
+table th,table td{
+  text-align: center;
+}
+.flex-center{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.newDays{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

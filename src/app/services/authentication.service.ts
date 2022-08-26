@@ -11,17 +11,15 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  public getLoggedUser(): UserS{
+  public getLoggedUser(): UserS|undefined{
     if(!this._LoggedUser)
     {
       let user = sessionStorage.getItem("LoggedUser");
       if(user){
         this._LoggedUser = JSON.parse(user);
       }
-      else throw new Error("No session")
     }
-
-    return this._LoggedUser!;
+    return this._LoggedUser;
   }
 
   set LoggedUser(value: UserS) {

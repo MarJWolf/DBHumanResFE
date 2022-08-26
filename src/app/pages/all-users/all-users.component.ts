@@ -57,7 +57,7 @@ export class AllUsersComponent implements OnInit {
           if (result) {
             console.log("result is true")
             this.backendService.getById(Id).subscribe(value => {
-              this.backendService.dismissUser(value).subscribe();
+              this.backendService.dismissUser(value).subscribe(()=> location.reload());
             });
           }
         }}

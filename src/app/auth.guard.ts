@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   isLoggedIn(): boolean{
+    console.log(this.authService.getLoggedUser())
     if(this.authService.getLoggedUser() == undefined){
       this.router.navigate(["login"])
     }

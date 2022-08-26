@@ -82,7 +82,7 @@ export class OtherDataComponent implements OnInit {
       width: 'clamp(300px,50%,500px)',
       data: {text: "Сигурни ли сте че искате да изтриете тази длъжност?", setResult: (result:boolean) => {
           if (result) {
-            this.backendService.deleteJobTitle(Id).subscribe();
+            this.backendService.deleteJobTitle(Id).subscribe(()=> location.reload());
           }
         }}
     });
@@ -93,7 +93,7 @@ export class OtherDataComponent implements OnInit {
       width: 'clamp(300px,50%,500px)',
       data: {text: "Сигурни ли сте че искате да изтриете тази месторабота?", setResult: (result:boolean) => {
           if (result) {
-            this.backendService.deleteWorkplace(Id).subscribe();
+            this.backendService.deleteWorkplace(Id).subscribe(()=> location.reload());
           }
         }}
     });

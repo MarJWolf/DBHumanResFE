@@ -1,71 +1,120 @@
-<form (ngSubmit)="onOkClick()">
-  <h1 mat-dialog-title *ngIf="data">{{nameFC.value}}</h1>
-  <div mat-dialog-content style="display: grid">
-    <mat-form-field appearance="fill">
-    <mat-label>Парола</mat-label>
-    <input type="text" matInput [formControl]="passFC" placeholder="Pass249910word">
-      <mat-error *ngIf="passFC.invalid">Паролата е прекалено кратка!</mat-error>
-  </mat-form-field>
+<form>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="information">
 
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input type="email"  matInput [formControl]="emailFC" placeholder="Ex. pat@example.com">
-      <mat-error *ngIf="emailFC.hasError('email') && !emailFC.hasError('required')">
-        Невалиден имейл!
-      </mat-error>
-    </mat-form-field>
+      <h1 mat-dialog-title *ngIf="data">{{nameFC.value}}</h1>
+      <div mat-dialog-content style="display: grid">
+        <mat-form-field appearance="fill">
+          <mat-label>Парола</mat-label>
+          <input type="text" matInput [formControl]="passFC" placeholder="Pass249910word">
+          <mat-error *ngIf="passFC.invalid">Паролата е прекалено кратка!</mat-error>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Пълно име</mat-label>
-      <input type="text" matInput [formControl]="nameFC" placeholder="Екатерина Трендафилова Стойкова">
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput [formControl]="emailFC" placeholder="Ex. pat@example.com">
+          <mat-error *ngIf="emailFC.hasError('email') && !emailFC.hasError('required')">
+            Невалиден имейл!
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Длъжност</mat-label>
-      <mat-select [formControl]="jobFC">
-        <mat-option *ngFor="let job of jobTitleKeys" [value]="job">{{job.jobTitle}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Пълно име</mat-label>
+          <input type="text" matInput [formControl]="nameFC" placeholder="Екатерина Трендафилова Стойкова">
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Месторабота</mat-label>
-      <mat-select [formControl]="placeFC">
-        <mat-option *ngFor="let place of workplaceKeys" [value]="place">{{place.workplace}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Длъжност</mat-label>
+          <mat-select [formControl]="jobFC">
+            <mat-option *ngFor="let job of jobTitleKeys" [value]="job">{{job.jobTitle}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Дни платен отпуск по договор</mat-label>
-      <input type="number" matInput [formControl]="CdaysFC" placeholder="20">
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Месторабота</mat-label>
+          <mat-select [formControl]="placeFC">
+            <mat-option *ngFor="let place of workplaceKeys" [value]="place">{{place.workplace}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Оставащи дни платен отпуск за тази година</mat-label>
-      <input type="number" matInput [formControl]="TdaysFC" placeholder="10">
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Дни платен отпуск по договор</mat-label>
+          <input type="number" matInput [formControl]="CdaysFC" placeholder="20">
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Оставащи дни платен отпуск за минали година</mat-label>
-      <input type="number" matInput [formControl]="LdaysFC" placeholder="10">
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Роля</mat-label>
+          <mat-select [formControl]="roleFC">
+            <mat-option *ngFor="let role of roleKeys" [value]="role[0]">{{role[1]}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Роля</mat-label>
-      <mat-select [formControl]="roleFC">
-        <mat-option *ngFor="let role of roleKeys" [value]="role[0]">{{role[1]}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Мениджър</mat-label>
+          <mat-select [formControl]="managerFC">
+            <mat-option *ngFor="let man of managerKeys" [value]="man">{{man.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="days && days.length > 0 && isAdmin()" label="days">
+      <table mat-table [dataSource]="days" class="mat-elevation-z8 align-center table">
+        <ng-container matColumnDef="paidDays">
+          <th mat-header-cell *matHeaderCellDef> Дни</th>
+          <td mat-cell *matCellDef="let day">
+            {{day.days}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef> Година</th>
+          <td mat-cell *matCellDef="let day">
+            {{day.year}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="use">
+          <th mat-header-cell *matHeaderCellDef> Ползване</th>
+          <td mat-cell *matCellDef="let day">
+            <mat-checkbox [checked]="day.use" (change)="onCheckboxChange($event.checked, day.id)" ></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Действие</th>
+          <td mat-cell *matCellDef="let day">
+            <button mat-button (click)="deleteDays(day.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div *ngIf="showNewDaysFields" class="newDays">
+        <mat-form-field appearance="fill" class="w35">
+          <mat-label>Платени Дни</mat-label>
+          <input type="number" matInput [formControl]="daysFC" min="0">
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Мениджър</mat-label>
-      <mat-select [formControl]="managerFC">
-        <mat-option *ngFor="let man of managerKeys" [value]="man">{{man.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    </div>
-
+        <mat-form-field appearance="fill" class="w25">
+          <mat-label>Година</mat-label>
+          <mat-select [formControl]="yearFC">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox [formControl]="isUsable" checked="true">Използваеми</mat-checkbox>
+      </div>
+      <div class="flex-center">
+        <button mat-fab (click)="saveNewDays()" *ngIf="showNewDaysFields">
+          <mat-icon>save</mat-icon>
+        </button>
+        <button mat-fab (click)="toggleAdd()" [color]="showNewDaysFields?'warn':'accent'">
+          <mat-icon>{{showNewDaysFields ? 'close' : 'add'}}</mat-icon>
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Назад</button>
-    <button mat-button type="submit">Запази промени</button>
+    <button mat-button (click)="onOkClick()">Запази промени</button>
   </div>
+
 </form>

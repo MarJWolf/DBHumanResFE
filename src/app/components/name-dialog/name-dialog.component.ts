@@ -21,9 +21,17 @@ export class NameDialogComponent implements OnInit {
   onOKClick(){
     if(this.nameFC.valid){
       if(this.data && this.data.type){
-        this.backendService.createWorkplace(this.nameFC.value).subscribe();
+        this.backendService.createWorkplace(this.nameFC.value).subscribe(
+          () =>{
+            location.reload();
+          }
+        );
       }else if(this.data && !this.data.type){
-        this.backendService.createJobTitle(this.nameFC.value).subscribe();
+        this.backendService.createJobTitle(this.nameFC.value).subscribe(
+          () =>{
+            location.reload();
+          }
+        );
       }
       this.dialogRef.close(true);
     }else{
