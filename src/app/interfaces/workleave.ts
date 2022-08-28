@@ -1,4 +1,5 @@
 import {Holiday} from "./user";
+import {colorType} from "../components/calendar-cell/calendar-cell.component";
 
 export interface Workleave {
   id: number,
@@ -33,11 +34,6 @@ export const statusTranslation = {
   Confirmed: "Потвърден",
   Denied: "Отказан",
   Cancelled: "Отменен"
-}
-export interface CalendarRow {
-  workplace:string;
-  name:string;
-  absences:number;
 }
 
 export interface CalendarUser {
@@ -78,4 +74,14 @@ export interface CalendarData {
   holidays: Holiday[]
 }
 
+//marti
+export interface CalendarDay {
+  [key:string]: colorType
+}
+export interface CalendarDTO {
+  workplace: string,
+  name : string,
+  allLeaves: number,
+  days? : CalendarDay
+}
 

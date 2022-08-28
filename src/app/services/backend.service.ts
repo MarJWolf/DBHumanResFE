@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
 import {CompanyInfo, Days, Holiday, JobTitle, Manager, User, UserSimp, Workplace} from "../interfaces/user";
-import {CalendarData, Workleave} from "../interfaces/workleave";
+import {CalendarData, CalendarDTO, Workleave} from "../interfaces/workleave";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -17,10 +17,10 @@ export class BackendService {
 
   getLoggedInUser() {
     const loggedUser = this.authService.getLoggedUser();
-    if(!loggedUser) return undefined;
-      return this.http.get<User>("http://localhost:8080/users/byId", {
-        params: {Id: loggedUser.userID}
-      });
+    if (!loggedUser) return undefined;
+    return this.http.get<User>("http://localhost:8080/users/byId", {
+      params: {Id: loggedUser.userID}
+    });
   }
 
   getAllUsers() {
@@ -35,15 +35,15 @@ export class BackendService {
     return this.http.get<UserSimp[]>("http://localhost:8080/users/allInactiveSimplified");
   }
 
-  updateUser(uv: User){
+  updateUser(uv: User) {
     return this.http.put("http://localhost:8080/users/update", {...uv});
   }
 
-  dismissUser(uv: any){
+  dismissUser(uv: any) {
     return this.http.put("http://localhost:8080/users/dismiss", {...uv});
   }
 
-  createUser(user: any){
+  createUser(user: any) {
     return this.http.post("http://localhost:8080/users/create", user);
   }
 
@@ -61,16 +61,16 @@ export class BackendService {
 
   //days
 
-  saveDays(days: Days){
+  saveDays(days: Days) {
     return this.http.post<Days[]>("http://localhost:8080/users/createDays", days);
   }
 
-  deleteDays(Id: number){
-    return this.http.delete("http://localhost:8080/users/deleteDays", { params: {Id}});
+  deleteDays(Id: number) {
+    return this.http.delete("http://localhost:8080/users/deleteDays", {params: {Id}});
   }
 
-  getDaysByUserId(userID: number){
-    return this.http.get<Days[]>("http://localhost:8080/users/allDaysByUserId", { params: {userID}});
+  getDaysByUserId(userID: number) {
+    return this.http.get<Days[]>("http://localhost:8080/users/allDaysByUserId", {params: {userID}});
   }
 
 
@@ -85,7 +85,7 @@ export class BackendService {
   }
 
   createWorkplace(name: string) {
-    return this.http.post("http://localhost:8080/users/createWorkplace",{}, {params:{name}});
+    return this.http.post("http://localhost:8080/users/createWorkplace", {}, {params: {name}});
   }
 
   //jobtitle
@@ -99,11 +99,11 @@ export class BackendService {
   }
 
   getJobTitleById(Id: number) {
-    return this.http.get<JobTitle>("http://localhost:8080/users/getJobTitleById",{params:{Id}});
+    return this.http.get<JobTitle>("http://localhost:8080/users/getJobTitleById", {params: {Id}});
   }
 
   createJobTitle(name: string) {
-    return this.http.post("http://localhost:8080/users/createJobTitle",{}, {params:{name}});
+    return this.http.post("http://localhost:8080/users/createJobTitle", {}, {params: {name}});
   }
 
   //company info
@@ -113,7 +113,7 @@ export class BackendService {
   }
 
   updateCompanyInfo(Cname: string, Oname: string) {
-    return this.http.put("http://localhost:8080/users/updateCompanyInfo", {},{params:{Cname, Oname}});
+    return this.http.put("http://localhost:8080/users/updateCompanyInfo", {}, {params: {Cname, Oname}});
   }
 
   //workleaves
@@ -130,23 +130,23 @@ export class BackendService {
     });
   }
 
-  changeStatus(workleaveId : number, status: string){
-    return this.http.put("http://localhost:8080/workleaves/changeStatus", {},{
+  changeStatus(workleaveId: number, status: string) {
+    return this.http.put("http://localhost:8080/workleaves/changeStatus", {}, {
       params: {workleaveId, status}
     });
   }
 
-  cancelWorkleave(workleaveId : number, status: string){
-    return this.http.put("http://localhost:8080/workleaves/cancelWorkleave", {},{
+  cancelWorkleave(workleaveId: number, status: string) {
+    return this.http.put("http://localhost:8080/workleaves/cancelWorkleave", {}, {
       params: {workleaveId, status}
     });
   }
 
-  updateWorkleave(uwv: any){
+  updateWorkleave(uwv: any) {
     return this.http.put("http://localhost:8080/workleaves/update", {...uwv});
   }
 
-  createWorkleave(workleave: any){
+  createWorkleave(workleave: any) {
     return this.http.post("http://localhost:8080/workleaves/create", workleave);
   }
 
@@ -155,8 +155,9 @@ export class BackendService {
     return this.http.get<Workleave[]>("http://localhost:8080/workleaves/pendingWithoutManager");
   }
 
-  getAllWorkleaves() {
-    return this.http.get<Workleave[]>("http://localhost:8080/workleaves/allSimplified");
+  getAllWorkleaves(userId?: number) {
+    const params = userId ? "?userId=" + userId : "";
+    return this.http.get<Workleave[]>("http://localhost:8080/workleaves/allSimplified"+params);
   }
 
   //managers
@@ -176,10 +177,14 @@ export class BackendService {
 
   // document
   getWorkleaveDocument(id: number) {
-    return this.http.get("http://localhost:8080/workleave",{params:{workleaveId:id}, responseType: 'blob' })
+    return this.http.get("http://localhost:8080/workleave", {params: {workleaveId: id}, responseType: 'blob'})
   }
+
   getNewWorkleaveDocument(id: number) {
-    return this.http.get("http://localhost:8080/workleave",{params:{workleaveId:id, createAgain: true}, responseType: 'blob' })
+    return this.http.get("http://localhost:8080/workleave", {
+      params: {workleaveId: id, createAgain: true},
+      responseType: 'blob'
+    })
   }
 
   //holiday
@@ -192,11 +197,14 @@ export class BackendService {
     return this.http.delete("http://localhost:8080/holidays/deleteHoliday", {params: {Id}});
   }
 
-  createHoliday(holidayDate:Date,holidayName:string) {
-    return this.http.put("http://localhost:8080/holidays/createHoliday",{date:holidayDate,localName:holidayName }, {});
+  createHoliday(holidayDate: Date, holidayName: string) {
+    return this.http.put("http://localhost:8080/holidays/createHoliday", {
+      date: holidayDate,
+      localName: holidayName
+    }, {});
   }
 
-  getCalendarData(year:number):Observable<CalendarData> {
-    return this.http.get<CalendarData>("http://localhost:8080/workleaves/calendar",{params:{year}})
+  getCalendarData(year: number, month: number): Observable<CalendarDTO[]> {
+    return this.http.get<CalendarDTO[]>("http://localhost:8080/workleaves/calendar", {params: {year, month}})
   }
 }

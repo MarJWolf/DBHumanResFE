@@ -39,6 +39,8 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { WorkleaveCalendarComponent } from './pages/workleave-calendar/workleave-calendar.component';
 import { CalendarCellComponent } from './components/calendar-cell/calendar-cell.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -73,28 +75,30 @@ const routes: Routes = [
     WorkleaveCalendarComponent,
     CalendarCellComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        RouterModule.forRoot(routes),
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatListModule,
-        MatTableModule,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatSelectModule,
-        MatCardModule,
-        MatTabsModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatListModule,
+    MatTableModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatCardModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatPaginatorModule
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:CredentialsInterceptor, multi: true}
   ],

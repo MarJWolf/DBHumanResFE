@@ -1,6 +1,16 @@
 <div class="max-width">
   <div class="container-column" >
     <h2 class="h2" *ngIf="workleaves.length > 0">Всички отпуски</h2>
+      <mat-form-field appearance="fill">
+        <mat-label>Изберете потребител</mat-label>
+        <mat-select (valueChange)="getWorkleaves($event)" >
+          <mat-option [value]=""></mat-option>
+          <mat-option *ngFor="let user of allUsers" [value]="user.id">{{user.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
     <app-wltable class="tables" [workleaves]="workleaves" [hasUsername]="true" [toEdit]="true" [fetchWorkleaves]="getWorkleaves"></app-wltable>
+<!--    <mat-paginator (page)="getWorkleaves($event)"  [pageSize]="20" [pageSizeOptions]="[10,20,50]"></mat-paginator>-->
   </div>
 </div>

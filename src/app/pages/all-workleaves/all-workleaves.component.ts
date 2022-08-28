@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Workleave} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
 import {MatDialog} from "@angular/material/dialog";
-import {User} from "../../interfaces/user";
+import {User, UserSimp} from "../../interfaces/user";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-all-workleaves',
@@ -14,6 +15,8 @@ export class AllWorkleavesComponent implements OnInit {
   user?: User
   workleaves: Workleave[] =[]
 
+  allUsers?: UserSimp[];
+
   constructor(private backendService: BackendService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -22,14 +25,13 @@ export class AllWorkleavesComponent implements OnInit {
       userInfo.subscribe(value => {
           this.user = value;
           this.getWorkleaves();
-        }
-      );
+        });
+      this.backendService.getAllUsers().subscribe(value => this.allUsers = value)
     }
   }
 
-  public getWorkleaves() {
-    let workleaveInfo = this.backendService.getAllWorkleaves();
-    console.log("im heres")
+  public getWorkleaves(selectedUserId?:number,event? : PageEvent) {
+    let workleaveInfo = this.backendService.getAllWorkleaves(selectedUserId);
 
     if (this.user && this.backendService.isManager()) {
       workleaveInfo = this.backendService.getSubWorkleaves(this.user.id);

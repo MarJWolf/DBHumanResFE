@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 
-export type colorType = "Vacation" |"Non-Working Day" |"Sickness" |"Maternity/Paternity"|"none";
+export type colorType = "Paid" |"NonWorkingDay" | "Holiday" | "Sickness" |"Maternity"|"Unpaid"|"none";
 
 @Component({
   selector: 'app-calendar-cell',
@@ -18,11 +18,13 @@ export class CalendarCellComponent implements OnInit {
   text?:string;
 
   colors = {
-    "Vacation": "red",
-    "Non-Working Day": "cyan",
+    "Paid": "red",
+    "NonWorkingDay": "cyan",
+    "Holiday": "blue",
     "Sickness":"yellow",
-    "Maternity/Paternity":"purple",
-    "none":"none",
+    "Maternity":"purple",
+    "Unpaid":"grey",
+    "none":"white",
   }
 
   constructor() { }
