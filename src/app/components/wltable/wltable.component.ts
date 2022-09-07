@@ -1,4 +1,4 @@
-import 'rxjs' ;
+import 'rxjs';
 import {Component, Input, OnInit} from '@angular/core';
 import {Workleave} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
@@ -62,7 +62,7 @@ export class WLtableComponent implements OnInit {
   openDialog(workleave: Workleave): void {
     this.dialog.open(WldialogComponent, {
       width: 'clamp(300px,50%,500px)',
-      data: {workleave: workleave},
+      data: {workleave: workleave, isUserCustomizable: false},
     });
   }
 
@@ -80,6 +80,7 @@ export class WLtableComponent implements OnInit {
       window.open(objectURL, '_blank');
     })
   }
+
   printNewDoc(id: number) {
     this.backendService.getNewWorkleaveDocument(id).subscribe(file => {
       const objectURL = URL.createObjectURL(file);
@@ -87,4 +88,8 @@ export class WLtableComponent implements OnInit {
     })
   }
 
+  isAfterToday(startDate: Date) {
+    const date = new Date(startDate);
+    return new Date() < date;
+  }
 }

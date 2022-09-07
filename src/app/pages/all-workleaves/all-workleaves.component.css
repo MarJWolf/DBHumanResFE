@@ -1,8 +1,26 @@
-.tables{
+.tables {
   display: flex;
   width: 100%
 }
 
-.button{
+.button {
   margin-bottom: 20px;
+  margin-right: 100px;
+}
+
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.date-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+input {
+  color: white;
 }

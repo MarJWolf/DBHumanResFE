@@ -7,6 +7,7 @@ import {BackendService} from "../../services/backend.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {DateAdapter} from "@angular/material/core";
 import {HttpErrorResponse} from "@angular/common/http";
+import {UserSimp} from "../../interfaces/user";
 
 @Component({
   selector: 'app-wldialog',
@@ -14,9 +15,12 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['./wldialog.component.css']
 })
 export class WldialogComponent implements OnInit {
+  isUserCustomizable: boolean = false;
 
+  allUsers: UserSimp[] = [];
   typeKeys = Object.entries(Type);
-  statusKeys = allStatus.map(value => ({value: value,translation: statusTranslation[value]}))
+  statusKeys = allStatus.map(value => ({value: value, translation: statusTranslation[value]}))
+  userIdFC = new FormControl("");
   fillDateFC = new FormControl("", [Validators.required]);
   startDateFC = new FormControl("", [Validators.required]);
   endDateFC = new FormControl("", [Validators.required]);
@@ -32,20 +36,25 @@ export class WldialogComponent implements OnInit {
     statusAdmin: this.statusAdminFC
   })
 
+
   constructor(private backendService: BackendService,
               private authService: AuthenticationService,
               public dialogRef: MatDialogRef<WLtableComponent>,
               private _adapter: DateAdapter<any>,
-              @Inject(MAT_DIALOG_DATA) public data?: { workleave: Workleave },
+              @Inject(MAT_DIALOG_DATA) public data?: { workleave?: Workleave, isUserCustomizable: boolean },
   ) {
+    this.userIdFC.setValue(this.authService.getLoggedUser()?.userID);
     this._adapter.setLocale("bg-BG")
     if (data) {
-      this.fillDateFC.setValue(new Date(data.workleave.fillDate));
-      this.startDateFC.setValue(new Date(data.workleave.startDate));
-      this.endDateFC.setValue(new Date(data.workleave.endDate));
-      this.typeFC.setValue(data.workleave.type);
-      this.statusManagerFC.setValue(data.workleave.statusManager);
-      this.statusAdminFC.setValue(data.workleave.statusAdmin);
+      this.isUserCustomizable = data.isUserCustomizable;
+      if (data.workleave) {
+        this.fillDateFC.setValue(new Date(data.workleave.fillDate));
+        this.startDateFC.setValue(new Date(data.workleave.startDate));
+        this.endDateFC.setValue(new Date(data.workleave.endDate));
+        this.typeFC.setValue(data.workleave.type);
+        this.statusManagerFC.setValue(data.workleave.statusManager);
+        this.statusAdminFC.setValue(data.workleave.statusAdmin);
+      }
     }
   }
 
@@ -72,7 +81,7 @@ export class WldialogComponent implements OnInit {
       startDate.setHours(12)
       endDate.setHours(12)
       const type = this.workleaveForm.value.type;
-      if (this.data) {
+      if (this.data?.workleave) {
         const fillDate: Date = this.fillDateFC.value;
         const finalWorkleave = {
           ...this.data.workleave,
@@ -92,7 +101,7 @@ export class WldialogComponent implements OnInit {
       } else {
         const fillDate = new Date();
         const finalWorkleave = {
-          userId: this.authService.getLoggedUser()?.userID,
+          userId: this.userIdFC.value,
           type,
           fillDate,
           startDate,
@@ -118,9 +127,10 @@ export class WldialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.backendService.getAllUsers().subscribe(value => this.allUsers = value)
   }
 
-  isMine(userID: number){
+  isMine(userID?: number) {
     return this.authService.getLoggedUser()?.userID == userID
   }
 

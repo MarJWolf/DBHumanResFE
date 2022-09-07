@@ -70,7 +70,7 @@ export class UdialogComponent implements OnInit {
               public dialogRef: MatDialogRef<WLtableComponent>,
               @Inject(MAT_DIALOG_DATA) public data?: { user: User }) {
     this.managerKeys = [{id: null, name: "Няма мениджър"}];
-    this.jobTitleKeys = [{id: null, jobTitle: "Уволнен"}];
+    this.jobTitleKeys = [{id: null, jobTitle: "Освободен"}];
 
     this.backendService.getAllJobTitles().subscribe(value => {
       this.jobTitleKeys.push(...value)

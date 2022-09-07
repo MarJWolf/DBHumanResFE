@@ -80,8 +80,15 @@ export interface CalendarDay {
 }
 export interface CalendarDTO {
   workplace: string,
-  name : string,
+  name: string,
   allLeaves: number,
-  days? : CalendarDay
+  days?: CalendarDay
+}
+
+export interface CalendarYearDTO {
+  workplace: string;
+  name: string;
+  months: { [key: number]: number }[]
+  daysLeft: number;
 }
 

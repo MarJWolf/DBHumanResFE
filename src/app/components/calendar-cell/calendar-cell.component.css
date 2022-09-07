@@ -1,5 +1,8 @@
 .cell-box{
-  width:30px;
+  width: 30px;
   height: 30px;
-  border:1px solid #bdbdbd;
+  border: 1px solid #bdbdbd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -60,10 +60,15 @@ $custom-theme: mat.define-dark-theme($primary,$accent,mat.$red-palette);
 .w35{
   width: 35%;
 }
-.w50{
+.w50 {
   width: 50%;
 }
-.align-center{
+
+.w100 {
+  width: 100%;
+}
+
+.align-center {
   text-align: center;
 }
 .align-left{
@@ -94,12 +99,24 @@ body{
   align-items: center;
 }
 
-.h2{
+.h2 {
   flex: 1;
   color: white;
   text-align: center;
   font-family: SansSerif, serif;
 }
-.table-header{
+
+.table-header {
   margin-right: 5px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+.logo img {
+  width: 100%
 }

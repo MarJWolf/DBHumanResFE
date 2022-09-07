@@ -1,16 +1,22 @@
 <header>
   <ng-template [ngIf]="isLogged()">
     <div class="header">
+      <div class="logo">
+        <button mat-raised-button color="primary" (click)="router.navigate(['home'])">
+          <img src="assets/img/Quanterall.png" alt="Quanterall logo">
+        </button>
+      </div>
       <div class="align-left header-div-flex3">
-      <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
-        <button mat-raised-button color="accent" (click)="router.navigate(['calendar/workleaves'])">План на отпуските</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['home'])">Начална страница</button>
+        <button mat-raised-button color="accent" (click)="router.navigate(['calendar/workleaves'])">План на отпуските
+        </button>
         <ng-template [ngIf]="isManager()">
           <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
         </ng-template>
-      <ng-template [ngIf]="isAdmin()">
-        <button mat-raised-button color="accent" (click)="router.navigate(['calendar/holiday'])">Празници</button>
-        <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
-        <button mat-raised-button color="accent" (click)="router.navigate(['users'])">Всички потребители</button>
+        <ng-template [ngIf]="isAdmin()">
+          <button mat-raised-button color="accent" (click)="router.navigate(['calendar/holiday'])">Празници</button>
+          <button mat-raised-button color="accent" (click)="router.navigate(['workleaves'])">Всички отпуски</button>
+          <button mat-raised-button color="accent" (click)="router.navigate(['users'])">Всички потребители</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['inactive-users'])">Всички неактивни потребители</button>
         <button mat-raised-button color="accent" (click)="router.navigate(['other-data'])">Допълнителна информация</button>
       </ng-template>

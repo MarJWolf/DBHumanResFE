@@ -1,5 +1,5 @@
 {
-  "name": "diplomna-frontend",
+  "name": "leave-planner",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generageComponent": "ng generate component components/calendar-cell"
+    "generageComponent": "ng generate component components/calendar-cell",
+    "i18n:extract": "ng xi18n --output-path src/locale"
   },
   "private": true,
   "dependencies": {

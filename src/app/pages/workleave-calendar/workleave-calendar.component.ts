@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CalendarData, CalendarDTO, CalendarUser, CalendarWorkLeave, Type} from "../../interfaces/workleave";
+import {CalendarDTO, CalendarYearDTO} from "../../interfaces/workleave";
 import {BackendService} from "../../services/backend.service";
 import {colorType} from "../../components/calendar-cell/calendar-cell.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
@@ -33,39 +33,61 @@ export class WorkleaveCalendarComponent implements OnInit {
   years: number[] = Array.from({length: 50}, (_, i) => (new Date()).getFullYear() - i);
   monthDays: number[] = Array.from({length: 31}, (_, i) => (i + 1));
   calendarDTO?: CalendarDTO[];
-  headerNames = ["Месторабота", "Имена", ...this.monthDays.map(value => String(value)), "Отсъстващи дни"];
+  calendarYearDTO?: CalendarYearDTO[];
+  monthHeaderNames = ["Месторабота", "Имена", ...this.monthDays.map(value => String(value)), "Отсъстващи дни"];
+  yearHeaderNames = ["Месторабота", "Имена", ...this.months.map(value => String(value.name)), "Отсъстващи дни"];
   selectedYear = this.currentDate.getFullYear();
   selectedMonth: number = this.currentDate.getMonth();
 
   ngOnInit(): void {
-    this.getCalendarData(this.selectedYear, this.selectedMonth+1);
+    this.getCalendarData(this.selectedYear, this.selectedMonth + 1);
+    this.getCalendarYearData(this.selectedYear);
+  }
+
+  onTabChanged(tab: MatTabChangeEvent) {
+    this.selectedMonth = tab.index;
+    this.getCalendarData(this.selectedYear, this.selectedMonth + 1)
   }
 
   onYearChange(year: number) {
     this.selectedYear = year;
     this.getCalendarData(this.selectedYear, 1);
+    this.getCalendarYearData(this.selectedYear);
     this.selectedMonth = 0;
   }
 
   getCellType(day: number, user: CalendarDTO): colorType {
-      if (this.calendarDTO && user && user.days) {
-        const key = this.selectedYear + '-' + String(this.selectedMonth+1).padStart(2, '0') + '-' +  String(day).padStart(2, '0')
-        return user.days[key];
-      }
+    if (this.calendarDTO && user && user.days) {
+      const key = this.selectedYear + '-' + String(this.selectedMonth + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0')
+      return user.days[key];
+    }
     return "none";
   }
+
+  getYearCellType(day: number): colorType {
+    if (day > 0) {
+      return "Paid"
+    }
+    return "none";
+  }
+
   getCalendarData(year: number, month: number) {
     this.backendService.getCalendarData(year, month).subscribe(value => {
       this.calendarDTO = value
     })
   }
 
-  getDayOfWeek(num: number, day: number) {
-    return new Date(this.selectedYear,num,day).toLocaleString('bg', {  weekday: 'short' })
+  private getCalendarYearData(year: number) {
+    this.backendService.getCalendarYearData(year).subscribe(value => {
+      this.calendarYearDTO = value
+    })
   }
 
-  onTabChanged(tab: MatTabChangeEvent) {
-    this.selectedMonth = tab.index;
-    this.getCalendarData(this.selectedYear, this.selectedMonth + 1)
+  getDayOfWeek(num: number, day: number) {
+    return new Date(this.selectedYear, num, day).toLocaleString('bg', {weekday: 'short'})
+  }
+
+  getMonth(num: number) {
+    return new Date(this.selectedYear, num).toLocaleString('bg', {month: 'numeric'})
   }
 }

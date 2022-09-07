@@ -35,19 +35,7 @@ export class HomeComponent implements OnInit {
 
     if (userInfo) {
       userInfo.subscribe(value => {
-          this.user = value;
-          this.workleaves = this.user?.allWorkleaves ?? [];
-          this.userDays = this.user?.allDays ?? [];
-          this.backendService.getJobTitleById(this.user.jobTitleId).subscribe(
-            value1 => {
-              this.userJobTitle = value1.jobTitle;
-            })
-
-          this.userDays.map(days => {
-            if (days.use) {
-              this.userTotalDays = this.userTotalDays + days.days
-            }
-          })
+          this.setUserInfo(value);
           this.getWorkleaves(value.id);
         }
       );
@@ -59,10 +47,29 @@ export class HomeComponent implements OnInit {
 
     if (userInfo) {
       userInfo.subscribe(value => {
+        this.setUserInfo(value);
         this.getWorkleaves(value.id);
       })
     }
   }
+
+  private setUserInfo(value: User) {
+    this.user = value;
+    this.workleaves = this.user?.allWorkleaves ?? [];
+    this.userDays = this.user?.allDays ?? [];
+    this.backendService.getJobTitleById(this.user.jobTitleId).subscribe(
+      value1 => {
+        this.userJobTitle = value1.jobTitle;
+      })
+
+    this.userDays.map(days => {
+      if (days.use) {
+        this.userTotalDays = this.userTotalDays + days.days
+      }
+    })
+
+  }
+
   getWorkleaves = (userID: number) => {
     if (this.isManager() && userID) {
       this.backendService.getSubWorkleavesByMStat(userID, "Pending")?.subscribe(value => this.subUsersWL = value
@@ -76,7 +83,8 @@ export class HomeComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(WldialogComponent, {
-      width: 'clamp(300px,50%,500px)'
+      width: 'clamp(300px,50%,500px)',
+      data: {isUserCustomizable: false}
     });
   }
 
